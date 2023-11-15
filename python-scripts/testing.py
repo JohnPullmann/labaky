@@ -27,7 +27,7 @@ Switch3 = {
 Localhost_Switch = {
     "host": "192.168.247.129",
     "port": "5000",
-    "username": username,
+    "username": "Admin",
     "password": password,
     "device_type": "extreme_exos_telnet",
 }

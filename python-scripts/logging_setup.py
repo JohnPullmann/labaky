@@ -14,7 +14,7 @@ LOG_PATH = os.path.join(MAIN_PATH, "logs\\", f'{time.strftime("%Y-%m-%d_%H-%M-%S
 class ColorLogFormatter(logging.Formatter):
     """A class for formatting colored logs."""
 
-    colored_text = False
+    colored_text = True
     if colored_text:
         FORMAT = "[\033[92m%(asctime)s%(suffix)s - %(prefix)s%(levelname)s%(suffix)s] %(prefix)s%(msg)s%(suffix)s"
     else:
