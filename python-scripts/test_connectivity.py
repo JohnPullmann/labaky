@@ -17,7 +17,7 @@ def test_connectivity(logger, Devices):
                 logger.error("\tPing failed")
 
             # Connect to device
-            with ConnectHandler(**Devices[device]) as ssh:
+            with ConnectHandler(**Devices[device]) as net_connect:
                 logger.info(f"\tConnected to {device}\n")
                 
         except (TimeoutError) as error:

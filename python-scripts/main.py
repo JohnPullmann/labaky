@@ -6,6 +6,8 @@ import os
 from logging_setup_simple import logger
 
 from test_connectivity import test_connectivity
+from backup_config import backup_config
+from push_config import push_config
 
 os.system("color")
 
@@ -56,7 +58,7 @@ while not valid_devices:
     for i, device in enumerate(Devices):
         logger.info(f"\t{i+1}. - {device}: {Devices[device]['host']} ({Devices[device]['device_type']})")
     print("") # Empty line
-    logger.info("To choose device, type its number or name separated by comma. To stop choosing, type 'exit'. To choose all devices type 'all'. For examle: 1, Switch3")
+    logger.info("To choose device, type it's number or name separated by comma. To stop choosing, type 'exit'. To choose all devices type 'all'. For examle: 1, Switch3")
     logger.info("Enter devices: ")
     user_input = input("").replace(' ', '').split(',')
 
@@ -106,26 +108,30 @@ if protocol == "telnet":
 
     
 
-#def send_show_command(connection, command):
-#    try:
-#        return connection.send_command(command)
-#    except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
-#        print(error)
-
 operation = None
 available_operations = {
                         "Test Connectivity": {
                             "name": "Test Connectivity",
                             "description": "Test connectivity to devices",
                             "function": test_connectivity,
-                            }
+                            },
+                        "Backup Config": {
+                            "name": "Backup Config",
+                            "description": "Backup configuration of devices",
+                            "function": backup_config,
+                            },
+                        "Push Config": {
+                            "name": "Push Config",
+                            "description": "Push configuration to devices",
+                            "function": push_config,
+                            },
                         }
 while True:
     logger.info("Choose one of available configuration and operations:")   
     for i, operation in enumerate(available_operations):
         logger.info(f"\t{i+1}. - {operation}{':' if available_operations[operation]['description'] else ''} {available_operations[operation]['description']}")
     print("") # Empty line
-    logger.info("To choose operation, type its number or name. To stop choosing, type 'exit'.")
+    logger.info("To choose operation, type it's number or name. To stop choosing, type 'exit'.")
     logger.info("Enter operation: ")
     user_input = input("").strip()
 
@@ -149,26 +155,6 @@ print() # Empty line
 logger.info("Starting operation: " + operation["name"] + "\n")
 operation["function"](logger, destination_devices)
 
-#for device in destination_devices:
-#    pass
-    #try:
-    #    with ConnectHandler(**Devices[device]) as net_connect:
-    #        which_prompt = net_connect.find_prompt()
-    #        print(which_prompt)
-            #if '>' in which_prompt:
-            #    net_connect.enable() # Go to Priv EXEC mode only 'if' '>' is present in the output
-            #net_connect.config_mode() # Global config mode
-    #        print(net_connect.find_prompt())
-    #        #net_connect.enable()
-    #
-    #        output = net_connect.send_command("show session")
-    #
-    #    pprint(output)
-    #except (TimeoutError) as error:
-    #    logger.error(f"Could not connect to {device}")
-
-    #except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
-    #    logger.error(error)
 
 
 
