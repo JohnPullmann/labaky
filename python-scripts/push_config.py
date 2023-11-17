@@ -54,11 +54,9 @@ def push_config(logger, Devices):
 				net_connect.send_config_set(config_commands)
 				logger.info(f"\tConfiguration pushed to {device}\n")
 
-		except (TimeoutError) as error:
+		except (TimeoutError, NetmikoTimeoutException) as error:
 			logger.error(f"\tCould not connect to {device}, Connection timed out\n")
 		except (NetmikoAuthenticationException) as error:
 			logger.error(f"\tCould not connect to {device}, Authentication failed\n")
-		except (NetmikoTimeoutException) as error:
-			logger.error(error)
-			logger.error(f"\tFailed to connect to {device}\n")
+
 

@@ -11,6 +11,7 @@ def backup_config(logger, Devices):
 
     for device in Devices:
         logger.info(f"Backing up {device}...")
+        logged = False
         try:
             with ConnectHandler(**Devices[device]) as net_connect:
                 logger.info(f"\tConnected to {device}\n")
@@ -34,28 +35,27 @@ def backup_config(logger, Devices):
                 backupFile = open(file_path, "w+")
                 backupFile.write(output)
                 logger.info("\tOutputted to " + file_path + "\n")
+                logged = True
 
-        except (TimeoutError) as error:
+        except (TimeoutError, NetmikoTimeoutException) as error:
             logger.error(f"\tCould not connect to {device}, Connection timed out\n")
         except (NetmikoAuthenticationException) as error:
             logger.error(f"\tCould not connect to {device}, Authentication failed\n")
-        except (NetmikoTimeoutException) as error:
-            logger.error(error)
-            logger.error(f"\tFailed to connect to {device}\n")
 
-        while True:
-            logger.info("Would you like to show configurations (y/n).\n")
-            user_input = input("").strip()
-            if user_input == "y":
-                for device in outputs:
-                    output = outputs[device]
-                    logger.info(f"Config for {device}:\n")
-                    logger.info(outputs[device]+"/n/n")
-                break
-            elif user_input == "n":
-                break
-            else:
-                logger.error("Wrong input\n")
+        if logged:
+            while True:
+                logger.info("Would you like to show configurations (y/n).\n")
+                user_input = input("").strip()
+                if user_input == "y":
+                    for device in outputs:
+                        output = outputs[device]
+                        logger.info(f"Config for {device}:\n")
+                        logger.info(outputs[device]+"/n/n")
+                    break
+                elif user_input == "n":
+                    break
+                else:
+                    logger.error("Wrong input\n")
 
 
         logger.info("Done\n"), 
