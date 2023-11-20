@@ -6,7 +6,7 @@ import time
 def push_config(logger, Devices):
 	"""Push configuration to devices."""
 	for device in Devices:
-		logger.info(f"Configuring {device}...")
+		logger.info(f"Configuring {device} ...")
 		try:
 			with ConnectHandler(**Devices[device]) as net_connect:
 				logger.info(f"\tConnected to {device}\n")
@@ -18,9 +18,9 @@ def push_config(logger, Devices):
 				while True:
 					logger.info(f"\tChoose one of available configuration files for {device}:")   
 					config_files = {}
-					for i, config_file in enumerate(os.listdir("configs/"+device+"/")):
-						logger.info(f"\t{i+1}. - { 'configs/'+device+'/'+config_file }")
-						config_files[config_file] = 'configs/'+device+'/'+config_file
+					for i, config_file in enumerate(os.listdir("python-scripts/configs/"+device+"/")):
+						logger.info(f"\t{i+1}. - {device+'/'+config_file }")
+						config_files[config_file] = 'python-scripts/configs/'+device+'/'+config_file
 					logger.info("\tTo choose configuration, type it's number or name. To stop choosing, type 'exit'.")
 					logger.info("\tEnter configuration: ")
 					user_input = input("\t").strip()
@@ -32,9 +32,9 @@ def push_config(logger, Devices):
 							config = config_files[list(config_files.keys())[int(user_input)-1]]
 							break
 						else:
-							logger.error("Wrong configuration number\n")
+							logger.error("\tWrong configuration number\n")
 					elif user_input not in config_files:
-						logger.error("Wrong configuration name\n")
+						logger.error("\tWrong configuration name\n")
 					else:
 						config = config_files[user_input]
 						break
@@ -44,12 +44,11 @@ def push_config(logger, Devices):
 				# load config file
 				with open(config, 'r') as config_file:
 					config_file.seek(0)
-					config_file.close()
                 
-				#parse config file to config_commands
-				config_commands = []
-				for each_line in config_file.readlines():
-					config_commands.append(each_line)
+					#parse config file to config_commands
+					config_commands = []
+					for each_line in config_file.readlines():
+						config_commands.append(each_line)
 				
 				net_connect.send_config_set(config_commands)
 				logger.info(f"\tConfiguration pushed to {device}\n")

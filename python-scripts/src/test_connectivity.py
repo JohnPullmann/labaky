@@ -5,7 +5,7 @@ import ping3
 def test_connectivity(logger, Devices):
     """Test connectivity to devices."""
     for device in Devices:
-        logger.info(f"Connecting to {device}...")
+        logger.info(f"Connecting to {device} ...")
         try:
 
             # Ping device

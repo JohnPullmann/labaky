@@ -1,6 +1,5 @@
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
 from getpass import getpass
-from pprint import pprint
 
 protocol = None	
 while protocol != "ssh" and protocol != "telnet":
@@ -13,8 +12,8 @@ if protocol == "ssh":
 elif protocol == "telnet":
     device_type = "cisco_ios_telnet"
 
-password = getpass()
-priv_password = getpass("Enter your privilage mode password:")
+password = getpass("Enter password:")
+priv_password = getpass("Enter privilage mode password:")
 
 Switch3 = {
     "host": "192.168.0.30",
@@ -32,21 +31,11 @@ Localhost_Switch = {
     "device_type": "extreme_exos_telnet",
 }
 
-Devices = {"Switches": [Switch3]}
 
 
-
-def send_show_command(connection, command):
-    try:
-        return connection.send_command(command)
-    except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
-        print(error)
-
-
-with ConnectHandler(**Localhost_Switch) as net_connect:
-    print(net_connect.find_prompt())
+with ConnectHandler(**Switch3) as net_connect:
+    #print(net_connect.find_prompt())
     #net_connect.enable()
 
-    output = net_connect.send_command("show session")
-
-pprint(output)
+    output = net_connect.send_command("show user")
+    print(f"Show user output:\n{output}")

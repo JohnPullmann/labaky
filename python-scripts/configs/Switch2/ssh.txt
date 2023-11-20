@@ -1,0 +1,17 @@
+!
+hostname Switch2
+!
+username Admin password cisco
+!
+ip domain-name switch2.com
+!
+crypto key generate rsa general-keys modulus 1024
+!
+ip ssh version 2
+!
+line vty 0 15
+!
+login local
+!
+transport input all
+!

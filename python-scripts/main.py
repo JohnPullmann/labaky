@@ -3,11 +3,11 @@ from getpass import getpass
 from pprint import pprint
 import sys
 import os
-from logging_setup_simple import logger
+from src.logging_setup_simple import logger
 
-from test_connectivity import test_connectivity
-from backup_config import backup_config
-from push_config import push_config
+from src.test_connectivity import test_connectivity
+from src.backup_config import backup_config
+from src.push_config import push_config
 
 os.system("color")
 

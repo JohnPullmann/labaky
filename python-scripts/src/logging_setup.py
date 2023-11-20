@@ -1,15 +1,24 @@
 import logging
 import sys
 
+import os
+import pathlib
+import time
+
+
+MAIN_PATH = pathlib.Path(__file__).parent.parent.resolve()
+LOG_PATH = os.path.join(MAIN_PATH, "logs\\", f'{time.strftime("%Y-%m-%d_%H-%M-%S")}.log')
+
+
 
 class ColorLogFormatter(logging.Formatter):
     """A class for formatting colored logs."""
 
     colored_text = True
     if colored_text:
-        FORMAT = "%(prefix)s%(msg)s%(suffix)s"
+        FORMAT = "[\033[92m%(asctime)s%(suffix)s - %(prefix)s%(levelname)s%(suffix)s] %(prefix)s%(msg)s%(suffix)s"
     else:
-        FORMAT = "%(msg)s"
+        FORMAT = "[\033[92m%(asctime)s%(suffix)s - %(prefix)s%(levelname)s%(suffix)s] %(msg)s"
 
     LOG_LEVEL_COLOR = {
         "DEBUG": {'prefix': "\033[94m", 'suffix': "\033[0m"},
@@ -35,6 +44,16 @@ class ColorLogFormatter(logging.Formatter):
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
+
+
+file_logging = True
+if file_logging:
+    output_file_handler = logging.FileHandler(LOG_PATH)
+    output_file_handler.setLevel(logging.INFO)
+    file_formatter = logging.Formatter("[%(asctime)s - 	%(name)s: %(filename)s.%(funcName)s:%(lineno)d - %(levelname)s] %(message)s")
+    output_file_handler.setFormatter(file_formatter)
+    logger.addHandler(output_file_handler)
+
 
 stdout_handler = logging.StreamHandler(sys.stdout)
 stdout_handler.setLevel(logging.INFO)
