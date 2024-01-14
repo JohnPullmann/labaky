@@ -1,0 +1,7 @@
+
+logs/
+backup-config/
+python-scripts/__pycache__/
+__pycache__/
+python-scripts/src/__pycache__/
+src/__pycache__/
