@@ -1,0 +1,41 @@
+hostname Switch1
+!
+service password-encryption
+!
+enable secret class
+!
+no ip domain-lookup
+!
+banner motd *
++---------------------------------------------------------+
+|                         Switch1                         |
+|                                                         |
+|                   welcome and have fun                  |
++---------------------------------------------------------+
+*
+!
+!
+line console 0
+!
+password cisco
+!
+login
+!
+logging synchronous
+!
+exit
+!
+!
+line vty 0 15
+!
+password cisco
+!
+login
+!
+logging synchronous
+!
+exit
+!
+exit
+!
+copy running-config startup-config

@@ -1,0 +1,5 @@
+line vty 0 15
+login local
+exit
+exit
+copy run start

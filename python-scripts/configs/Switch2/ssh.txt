@@ -15,3 +15,4 @@ login local
 !
 transport input all
 !
+copy running-config startup-config

@@ -18,9 +18,9 @@ def push_config(logger, Devices):
 				while True:
 					logger.info(f"\tChoose one of available configuration files for {device}:")   
 					config_files = {}
-					for i, config_file in enumerate(os.listdir("python-scripts/configs/"+device+"/")):
+					for i, config_file in enumerate(os.listdir("labaky/python-scripts/configs/"+device+"/")):
 						logger.info(f"\t{i+1}. - {device+'/'+config_file }")
-						config_files[config_file] = 'python-scripts/configs/'+device+'/'+config_file
+						config_files[config_file] = 'labaky/python-scripts/configs/'+device+'/'+config_file
 					logger.info("\tTo choose configuration, type it's number or name. To stop choosing, type 'exit'.")
 					logger.info("\tEnter configuration: ")
 					user_input = input("\t").strip()
@@ -50,8 +50,14 @@ def push_config(logger, Devices):
 					for each_line in config_file.readlines():
 						config_commands.append(each_line)
 				
-				net_connect.send_config_set(config_commands)
+				net_connect.send_config_set(config_commands, delay_factor=2)
+				#net_connect.set_base_prompt()
 				logger.info(f"\tConfiguration pushed to {device}\n")
+
+				#for command in config_commands:
+				#	net_connect.send_config_set([command], delay_factor=2)
+				#	net_connect.set_base_prompt()
+				#logger.info(f"\tConfiguration pushed to {device}\n")
 
 		except (TimeoutError, NetmikoTimeoutException) as error:
 			logger.error(f"\tCould not connect to {device}, Connection timed out\n")

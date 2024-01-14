@@ -1,0 +1,2 @@
+exit 
+copy flash:baseconfig runn
