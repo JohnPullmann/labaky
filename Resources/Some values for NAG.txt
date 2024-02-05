@@ -1,0 +1,426 @@
+HSRP
+
+options:HSRP 
+	HSRPv6
+	VRRPv2
+	VRRPv3
+	GLBP
+
+initial
+learn
+listen
+speak
+standby
+active
+
+HSRPv1 group numbers 0-255
+HSRPv2 group numbers 0-4095
+
+HSRPv1 multicast 224.0.0.2
+HSRPv2 IPv4 multicast 224.0.0.102
+HSRPv2 IPv6 multicast FE02::66
+
+HSRPv1 virtual MAC 0000.0C07.AC00-0000.0C07.ACFF (posledne 2 hexadecimály reprezentujú číslo groupy)
+HSRPv2 IPv4 virtual MAC 0000.0C9F.F000-0000.0C9F.FFFF (posledne 3 hexadecimály reprezentujú číslo groupy)
+HSRPv2 IPv6 virtual MAC 0005.73A0.0000 through 0005.73A0.0FFF (posledne 3 hexadecimály reprezentujú číslo groupy)
+
+default HSRP priority is 100
+
+The range of the HSRP priority is 0 to 255
+
+HSRPv1/2 hello packet every 3 sec
+HSRPv1/2 active router destroyed after 10 sec (keď nepríme hello packet)
+------------------------------------------------------------------------------------------------------------------
+ETHERCHANNEL
+
+PAgP packets are sent every 30 seconds.
+
+interface types cannot be mixed
+------------------------------------------------------------------------------------------------------------------
+STP
+
+Hello Timer (2 seconds) - The interval between BPDU updates.
+Max Age Timer (20 seconds) - The maximum length of time a switch saves BPDU information. After not recieving goes into blocking
+Forward Delay Timer (15 seconds) - The time spent in the listening and learning states.
+
+Bridge priority - (default 32768, range 0 - 61440, increment of 4096)
+Extended system ID (vlan)
+MAC address
+
+STP cost (RSTP cost)
+10 gb - 2 (2 000)
+1 gb - 4 (20 000)
+100 mb - 19 (200 000)
+10 mb - 100 (2 000 000)
+
+default port priority - 128
+
+blocking (RSTP discarding) - alternate port (can only recieve BPDUs not send)
+listening (RSTP discarding) - exchange of BPDUs between switches
+learning (RSTP learning) -processes BPDUs, populates MAC address table
+forwarding (RSTP forwarding) - forwarding
+disabled (RSTP discarding) - shutdown
+
+Root Port (RSTP root)
+Designated Port (RSTP designated)
+Blocked Port (RSTP backup/alternate)
+(packup is for multiple routes between 2 devices)
+
+STP
+PVST+
+RSTP
+Rapid PVST+
+MSTP
+MST
+------------------------------------------------------------------------------------------------------------------
+RIP - AD 120 
+
+update every 30 seconds
+RIPv1 používa broadcast 255.255.255.255
+RIPv2 používa multicast 224.0.0.9
+
+max hop count 15
+15th hop router nebude forwardovať tento update
+
+source aj dest. port sú UDP 520
+------------------------------------------------------------------------------------------------------------------
+EIGRP - AD 90 (internal) AD 170 (external)
+
+IGRP (predchodca EIGRP) používa broadcast 255.255.255.255
+EIGRP používa multicast 255.0.0.10
+EIGRP používa IPv6 multicast FE02::A
+EIGRP používa multicast MAC 01-00-5E-00-00-0A
+
+IGRP update každých 90 sec.
+IGRP maximum hops 255
+
+Hello Packet každých 5 sekúnd na linke s rýchlosťov 1,544 Mb/s or more, inak posiela každých 60 sekúnd
+
+Dead line je 15 sekúnd na linke s rýchlosťov 1,544 Mb/s or more, inak 180 sekúnd
+
+K1 - BW
+K2 - load
+K3 - delay 
+K4, K5 - reliability
+
+DELAY VALUES: ethernet 1,000
+              fast ethernet 100
+              gigabit ethernet 10
+              serial 20,000
+
+summary route má AD 5 (summary route je tá čo pointuje do Null0)
+-----------------------------------------------------------------------------------------------------------------
+ACL
+standard numbered = 1-99,1300-1999
+extended numbered = 100-199,2000-2699
+------------------------------------------------------------------------------------------------------------------
+WAN terminology
+
+point-to-point Topology
+Hub-and-Spoke Topology
+Dual-homed Topology
+Fully Meshed Topology
+Partially Meshed Topology
+
+Single-Carrier WAN
+Dual-Carrier WAN
+
+L2 protocols:
+broadband
+wireless
+etherenet
+MPLS
+PPP
+DHLC
+frame relay
+ATM
+
+DTE
+DCE
+CPE
+POP
+Demarcation Point
+Local Loop
+Toll network
+Backhaul network
+Backbode network
+
+CSU/DSU
+
+Circuit Switched (PSTN,ISDN)
+Packet Switched (frame relay,ATM)
+
+SDH/SONET
+DWDM
+
+E-Carrier 2,048Mb- 34,368Mb
+T-Carrier 1,544Mb - 43,7Mb
+MPLS
+
+Single-homed
+Dual-homed
+multihomed
+Dual-multihomed
+--------------------------------------------------------------------------------------------------------------------------
+CDP
+every 60 sec
+holdtime 180 sec
+
+LLDP
+every 30 sec
+holdtime 120 sec
+--------------------------------------------------------------------------------------------------------------------------
+Headers sizes
+
+TCP header - 10 fields 20 bytes
+UDP header - 4 fields 8 bytes
+IPv4 - 12 fields 60 bytes
+ipv6 - 8 fields 120 bytes
+ethernet header - 4 fields 14 bytes
+ehternet trailer - 2 fields 4 bytes
+--------------------------------------------------------------------------------------------------------------------------
+Ports
+
+Well-known Ports - 0 to 1,023
+Registered Ports - 1,024 to 49,151
+Dynamic Ports - 49.152 to 62,535
+
+DNS client - 53 
+DHCP client - 68
+DHCP server - 67
+DHCPv6 client -546
+DHCPv6 server - 547
+SMTP - 25
+POP3 - 110
+IMAP - 143
+FTP - 20 and 21
+TFTP - 69
+HTTP - 80
+HTTPS - 443
+--------------------------------------------------------------------------------------------------------------------------
+DHCPv4
+
+DHCP discover
+DHCP offer
+DHCP request
+DHCP ack
+--------------------------------------------------------------------------------------------------------------------------
+DHCPv6
+
+DHCP SOLICIT
+DHCP ADVERTISE
+DHCP INFORMATION REQUEST
+DHCP REPLY
+
+A flag - advertisiment (SLAAC)
+O flag - other flag (stateless dhcp)
+M flag - management (stateful dhcp)
+
+RA every 200 sec
+
+FF02::1:2 - all DHCPv6 servers multicast
+--------------------------------------------------------------------------------------------------------------------------
+ATTACKS
+
+Virus
+Worm
+Trojan Horse
+
+Reconnaissance attack
+Access attack
+Denial of service
+Malware attack
+
+L2 attacks:
+MAC Table attacks
+VLAN attacks
+DHCP attacks
+ARP attacks
+address spoofing attacks
+STP attacks
+--------------------------------------------------------------------------------------------------------------------------
+SECURITY
+
+NAC - network access control (AAA)
+ESA - email security appliance
+WSA - web security appliance
+NGFW - next generation firewall
+VPN-Enabled Router
+
+802.1X
+
+Port security
+DHCP Snooping
+Dynamic ARP inspection (DAI)
+IP Source guard (IPSG)
+--------------------------------------------------------------------------------------------------------------------------
+Switch/Router BOOT
+
+POST
+Boot Loader (ROM)
+Boot Loader performs low-level CPU initialization
+Boot Loader initializes flash file system
+Boot Loader loads IOS and hands control to it
+--------------------------------------------------------------------------------------------------------------------------
+WIFI
+
+802.11 - 2.4Ghz (legacy)
+	 2Mbs
+802.11a - 5Ghz (basic 5Ghz)
+	  54Mbs
+802.11b - 2.4Ghz (basic 2.4Ghz)
+	  11Mbs
+802.11g - 2.4Ghz (enhancen 802.11b)
+	  54Mbs
+802.11n - 2.4Ghz, 5 Ghz (MIMO technology)
+	  150 - 600Mbs
+802.11ac - 5Ghz (MIMO technology)
+	   450Mbs - 1.3Gbs
+802.11ax - 2.4Ghz, 5 Ghz (1Ghz ,7Ghz) (Wi-Fi 6, MIMO technology)
+
+Omnidirectional antenna - 360 anténa
+Directional antenna - smerová anténa 	   
+
+Ad-hoc - P2P Wireless (IBSS (independent basic service set))
+Infrastructure - AP sa pripája do wired structure
+tethering - mobile hotspot
+
+BSS - basic service set
+BSA - basic service area (area in which BSS operates)
+ESS - extended service set (prepojuje BSS)
+ESA - extended service area (area in which ESS operates)
+
+SSID active - client musí aktívne požiadať o pripojenie
+SSID pasive - pasívne advertisuje SSID
+
+2.4Ghz - 2.5Ghz
+11 channels (north america) 13 channels (europe) 14 channels (japan)
+each channel is big 22Mhz
+channel separation 5Mhz
+non overlapping - 1,6,11
+
+5Ghz - 5.1Ghz
+24 Channels
+channel separation 20Mhz
+Channels do not overlap
+
+DSSS
+FHSS
+OFDM
+ODFMA
+--------------------------------------------------------------------------------------------------------------------------
+CAPWAP
+
+DTLS encryption
+
+data port - UDP 5247
+control port - UDP 5246
+--------------------------------------------------------------------------------------------------------------------------
+Wireless Security
+
+WEP - RC4 encryption
+WPA - TKIP encryption
+WPA2 - AES encryption
+WPA3 - PMF frames
+
+RADIUS ports - UDP 1812 authentification
+	       UDP 1813 accounting
+	       UDP 1645
+	       UDP 1646
+--------------------------------------------------------------------------------------------------------------------------
+Packet Forwarding
+
+Router: Process switching
+	Fast switching
+	CEF (Cisco Express Forwarding)
+
+Switch: Store-and-forward
+	cut-through
+--------------------------------------------------------------------------------------------------------------------------
+Administrative distance
+
+direct - 0
+static - 1
+EIGRP summary - 5
+external BGP - 20
+internal eigrp - 90
+OSPF - 110
+IS-IS - 115
+RIP - 120
+External EIGRP - 170
+internal BGP - 200
+--------------------------------------------------------------------------------------------------------------------------
+Routing protocols
+
+Distance vector: RIP
+		 EIGRP
+
+Link-State: OSPF
+	    IS-IS
+
+Path vector: BGP-4
+--------------------------------------------------------------------------------------------------------------------------
+OSPF
+
+uses Dijkstra shortest-path first (SPF) algorithm
+
+OSPF multicast 224.0.0.5 (everyone listens)
+OSPF multicast 224.0.0.6 (only DR and BDR listens)
+
+dead timer = hello timer * 4
+defo hello = 10 sec
+
+Packet types: Hello packet
+	      Database description packet
+	      Link-state request packet
+	      Link-state update packet
+	      Link-state acknowledgment packet
+
+Tables: Adjacency database
+	Link-state database (LSDB)
+	Forwarding database
+
+states: Down state
+	Init state
+	Two-Way State
+	ExStart State
+	Exchange state
+	loading state
+	full state
+
+DR and BDR elections are non-preemtive
+
+OSPF metric = reference bandwidth / interface bandwidth
+defo = 100 000 000
+
+--------------------------------------------------------------------------------------------------------------------------
+QoS
+
+DiffServ
+IntServ
+
+FIFO
+WFQ
+CBWFQ
+LLQ
+
+shaping
+policing
+-----------------------------------------------------------------------------------------------------------------
+virtualisation
+
+SaaS
+PaaS
+IaaS
+
+public cloud
+private cloud
+hybrid cloud
+community cloud
+
+SDN
+
+
+
+	      
+	      

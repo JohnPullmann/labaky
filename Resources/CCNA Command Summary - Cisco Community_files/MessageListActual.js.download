@@ -1,0 +1,28 @@
+;(function ($) {
+	const setRoleAndLabel = (params, row, status) => {
+		const $column = $(row).find(params.selectors.triangleTopClass);
+		const $cell = $column.find(params.selectors.emptyCellClass);
+		if ($cell !== null && $cell !== undefined) {
+			$cell.attr('role', 'img');
+			$cell.attr('aria-label', status);
+		}
+	}
+	LITHIUM.MessageListActual = function (params) {
+		const $rows = $(params.selectors.listRowSelector);
+		$rows.each((index, row) => {
+			const rowClass = row.className;
+			if (rowClass.includes(params.misc.threadSolvedClass)) {
+				setRoleAndLabel(params, row, params.misc.solvedStatus);
+			} else if (rowClass.includes(params.misc.threadEscalatedClass)) {
+				setRoleAndLabel(params, row, params.misc.escalatedStatus);
+			} else if (rowClass.includes(params.misc.threadReadOnlyClass)) {
+				setRoleAndLabel(params, row, params.misc.readonlyStatus);
+			} else if (rowClass.includes(params.misc.threadUnreadClass)) {
+				setRoleAndLabel(params, row, params.misc.unreadStatus);
+			} else if (!rowClass.includes(params.misc.threadClass)) {
+				setRoleAndLabel(params, row, params.misc.unsolvedStatus);
+			}
+		});
+	}
+})(LITHIUM.jQuery);
+

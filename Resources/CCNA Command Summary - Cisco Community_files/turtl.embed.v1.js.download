@@ -1,0 +1,179 @@
+(function (window) {
+  if (window.turtlEmbed) {
+    return;
+  }
+  window.turtlEmbed = true;
+
+  var document = window.document;
+  var scriptTag = document.querySelectorAll('[data-turtl-script=embed]')[0];
+  var config = parseTagConfig(scriptTag);
+  var modal;
+
+  injectCSS(initEmbeds);
+
+  function injectCSS(onload) {
+    var link    = document.createElement('link');
+    link.rel    = 'stylesheet';
+    link.type   = 'text/css';
+    link.media  = 'screen';
+    link.href   = scriptTag.src.replace(/\.js/, '.css');
+    link.onload = onload;
+    document.head.appendChild(link);
+  }
+
+  function initEmbeds() {
+    var items = document.querySelectorAll('.turtl-embed');
+
+    for (var i = 0; i < items.length; i++) {
+      var embedConfig = parseTagConfig(items[i]);
+      var storyPersonalisationId = embedConfig.personalisationId
+      var storyId = embedConfig.storyId
+      var coverUrl = coverForStory(storyId, storyPersonalisationId)
+      var perspective = parseInt(embedConfig.width || 440) * 2.5;
+
+      var classNames = [
+        '__turtl-teaser',
+        '__turtl-animation-mode-' + (embedConfig.animationMode || 'hover'),
+        isTouch() ? ' __touch' : ''
+      ];
+
+      items[i].className += ' ' + classNames.join(' ');
+      items[i].innerHTML =
+        '<span class="__turtl-teaser-text" style="color: ' + embedConfig.color + '">' +
+          'Click to read ' +
+          '<svg class="__turtl-teaser-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 191">' +
+            '<path fill="currentColor" d="M152.2 113c-7.4-36-28-67.4-54.7-87C68.2 4 31.8-3.8 0 1.7c32 5.3 59 23.6 74.7 47C88.3 68.7 93.5 92 91.3 113H43.5l78.2 78 78.3-78h-47.8z"/>' +
+          '</svg>' +
+        '</span>' +
+        '<div class="__turtl-teaser-wrap" style="perspective: ' + perspective + 'px">' +
+          '<img class="__turtl-teaser-img" alt="' + items[i].title + '" src="' + coverUrl + '"/>' +
+          '<span class="__turtl-teaser-right"> ' +
+            '<img class="__turtl-teaser-img" role="presentation" src="' + coverUrl + '"/>' +
+            '<span class="__turtl-teaser-tint"></span>' +
+          '</span>' +
+        '</div>';
+
+      if (embedConfig.displayMode === 'lightbox') {
+        var qp = window.location.search.replace('?', '&')
+
+        // Personalization id pattern
+        var pidPattern = /&pid=[^&]+/
+        if (qp.match(pidPattern)) {
+          qp = qp.replace(pidPattern, '')
+        }
+
+        var href = items[i].getAttribute('href') + '&lightbox=true' + qp
+
+        var onClick = genOnClick(href, embedConfig)
+        items[i].addEventListener('click', onClick)
+      }
+    }
+  }
+
+  function genOnClick(href, embedConfig) {
+    return function (e) {
+      e.preventDefault();
+      showModal(href, embedConfig.storyId);
+    };
+  }
+
+  function showModal(href, storyId) {
+    injectModal();
+    document.body.classList.add('__ttl-modal-open');
+
+    if (window.history && window.history.pushState) {
+      window.history.pushState({ttlStoryId: storyId}, null);
+    }
+
+    setTimeout(function () {
+      frame.contentWindow.location.replace(href + '&embed=true&lightbox=true');
+      modal.className = '__turtl-modal-showing';
+      modal.style.display = 'block';
+    });
+  };
+
+  function hideModal() {
+    modal.className = '__turtl-modal-hiding';
+    document.body.classList.remove('__ttl-modal-open');
+
+    setTimeout(function () {
+      frame.src =  'about:blank';
+      modal.className = '';
+      modal.style.display = 'none';
+    }, 300);
+  }
+
+  function injectModal() {
+    if (modal) {
+      return;
+    }
+
+    frame = document.createElement('iframe');
+    frame.id  = '__turtl-frame';
+    frame.src = 'about:blank';
+
+    modal = document.createElement('div');
+    modal.id  = '__turtl-modal';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.id  = '__turtl-close-btn';
+    closeBtn.addEventListener('click', hideModal);
+
+    window.addEventListener('message',   onMessage);
+    window.addEventListener('onmessage', onMessage);
+    window.addEventListener('popstate',  onPopState);
+
+    modal.appendChild(closeBtn);
+    modal.appendChild(frame);
+    document.body.appendChild(modal);
+
+    function onMessage(e) {
+      var data;
+
+      try {
+        data = JSON.parse(e.data);
+      } catch (err) {};
+
+      if (data && data.turtl && data.turtl.message && data.turtl.message === 'didClickBackground') {
+        hideModal();
+      }
+    }
+
+    function onPopState(e) {
+      if (!e.state || !e.state.turtlStoryId) {
+        hideModal();
+      }
+    }
+  }
+
+  function coverForStory(storyId, storyPersonalisationId) {
+    var assetsHost = config.assetsHostname || 'https://assets.turtl.co'
+
+    if (storyPersonalisationId) {
+      return assetsHost + '/covers/' + storyId + '-' + storyPersonalisationId + '.jpg'
+    }
+    
+    return assetsHost + '/covers/' + storyId + '.jpg'
+  }
+
+  function parseTagConfig(tag) {
+    var config = {};
+
+    [].forEach.call(tag.attributes, function (attr) {
+      if (/^data-turtl-/.test(attr.name)) {
+        var camelCaseName = attr.name.substr(11).replace(/-(.)/g, function ($0, $1) {
+          return $1.toUpperCase();
+        });
+
+        config[camelCaseName] = attr.value;
+      }
+    });
+
+    return config;
+  }
+
+  function isTouch() {
+    return 'ontouchstart' in document.documentElement;
+  }
+
+})(window);

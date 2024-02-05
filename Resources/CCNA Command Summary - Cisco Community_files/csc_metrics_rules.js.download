@@ -1,0 +1,3519 @@
+/**
+ * csc_metrics_rules.js
+ * metric tags for lithium support community for fusion
+ * date: 2021/10/22
+ * $Revision: 11.0 $
+ */
+//framework code
+$( document ).ready(function() {
+    // cisco support link on top left
+    try {
+        cdc.util.addMetricsRule(".top-header-left a",{
+          "lpos":"csc_header",
+          "lid" :"csc_header_shp"
+        });
+    }
+    catch(err) {}
+        
+    // buy or renew button on top left
+    try {
+        cdc.util.addMetricsRule("div[class='buy-or-renew'] div a",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_buy_or_renew_button"
+        });
+    }
+    catch(err) {}
+
+    //welcome_username link on the top right header
+    try {
+        cdc.util.addMetricsRule(".top-header-right .welcome-header a",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_welcome"
+        });
+    }
+    catch(err) {}
+      
+    //notification icon
+    try {
+        cdc.util.addMetricsRule(".top-header-right a[class='lia-link-navigation lia-notification-feed-page-link']",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_notification",
+        "linktext" : "icon"
+        });
+    }
+    catch(err) {}
+
+    //messages icon
+    try {
+        cdc.util.addMetricsRule(".top-header-right a[class='lia-link-navigation private-notes-link']",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_messages",
+        "linktext" : "icon"
+        });
+    }
+    catch(err) {}
+
+    //user avatar-profile icon        
+    try {
+        cdc.util.addMetricsRule(".top-header-right a[class='UserAvatar lia-link-navigation']",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_user_profile",
+        "linktext" : "icon"
+        });
+    }
+    catch(err) {}
+        
+    //links under the profile icon menu
+    try {
+        cdc.util.addMetricsRule("div[class='top-header-right'] div[class='lia-quilt-column-alley lia-quilt-column-alley-single'] a",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_user_profile_dd"
+        });
+    }
+    catch(err) {}
+
+    // language selection
+    try {
+        cdc.util.addMetricsRule(".services-lib-language-selector a",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_lang"
+        });
+    }
+    catch(err) {}
+     
+    //dropdown menu language selection links
+    try {
+        cdc.util.addMetricsRule(".services-lib-language-selector .dropdown-menu li a",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_lang_dd"
+        });
+    }
+    catch(err) {}
+  
+    //click on  core nav added after the merger---2018/07/19
+    try {
+        jQuery(document).on("mousedown","div[class='lia-quilt-row lia-quilt-row-header_menu'] div[class='burger_menu_label toggle']", 
+        function() {
+            var obj = {
+                  ntpagetag : {
+              "lpos":"csc_header", 
+              "lid" :"csc_header_corenav",
+            "linktext" : $(this).text()
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+    
+    //clicks on the three stipes	---2018/07/19
+    try {
+    jQuery(document).on("mousedown","div[class='lia-quilt-row lia-quilt-row-header_menu'] div[class='cisco_sat_btn']", 
+        function() {
+            var obj = {
+                  ntpagetag : {
+              "lpos":"csc_header", 
+              "lid" :"csc_header_corenav",
+            "linktext" : "corenav_stripes"
+                }
+            };
+            trackEvent.event("link", obj); 
+        });	
+    }
+    catch(err) {}
+
+    //click on the X next to close	---2018/07/19
+    try {
+        jQuery(document).on("mousedown","div[class='lia-quilt-row lia-quilt-row-header_menu'] div[class='cisco_sat_btn active'] span", 
+        function() {
+            var obj = {
+                  ntpagetag : {
+              "lpos":"csc_header", 
+              "lid" :"csc_header_corenav",
+            "linktext" : "corenav_x"
+                }
+            };
+            trackEvent.event("link", obj); 
+        });		
+    }
+    catch(err) {}
+        
+  //clicks on the links in the menu -----2018/07/22
+  
+  /*
+  cdc.util.addMetricsRule("div[id='fusmenu'] ul li a",{
+      "lpos":"csc_header", 
+      "lid" :"csc_header_corenav_vv"
+  });	
+    
+  //second level clicks -----2018/07/23
+  
+  jQuery(document).on("mousedown","div[id='fusmenu'] ul li ul[class='fus-level-2'] li a", 
+    function() {
+    var obj = {
+          ntpagetag : {
+      "lpos":"csc_header", 
+      "lid" :"csc_header_corenav_level_2_vv",
+    "linktext": $.trim(jQuery(this).text()),
+    "grp1" : $(this).parent('li').parent('ul').prev('a').text()
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+  
+  
+  //third level clicks ------2018/07/23
+  
+  jQuery(document).on("mousedown","div[id='fusmenu'] ul li ul[class='fus-level-2'] li ul[class='fus-level-3'] li a", 
+    function() {
+    var obj = {
+          ntpagetag : {
+      "lpos":"csc_header", 
+      "lid" :"csc_header_corenav_level_3_vv",
+    "linktext": $.trim(jQuery(this).text()),
+    "grp1" : $.trim(jQuery(this).parent('li').parent('ul').prev('a').text()),	
+    "grp2" : $.trim(jQuery(this).parent('li').parent('ul').parent('li').parent('ul').prev('a').text())
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+  
+  //fourth level -----2018/07/23
+  
+  jQuery(document).on("mousedown","div[id='fusmenu'] ul li ul[class='fus-level-2'] li ul[class='fus-level-3 slide-out'] li[class='has-sub-four active'] ul li a", 
+    function() {
+    var obj = {
+          ntpagetag : {
+      "lpos":"csc_header", 
+      "lid" :"csc_header_corenav_level_4_vv",
+    "linktext": $.trim(jQuery(this).text()),
+    "grp1" : $.trim(jQuery(this).parent('li').parent('ul').prev('a').text()),	
+    "grp2" : $.trim(jQuery(this).parent('li').parent('ul').parent('li').parent('ul').prev('a').text()),
+    "grp3" : $.trim(jQuery(this).parent('li').parent('ul').parent('li').parent('ul').parent('li').parent('ul').prev('a').text())
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+  */	
+
+    try {
+        jQuery(document).on("mousedown","div[id='fusmenu'] ul li a", 
+        function() {
+            var obj = {
+                  ntpagetag : {
+              "lpos":"csc_header", 
+              "lid" :"csc_header_corenav",
+            "linktext": $.trim(jQuery(this).text()),
+            "grp1" : $.trim(jQuery(this).parent('li').parent('ul').prev('a').text()),	
+            "grp2" : $.trim(jQuery(this).parent('li').parent('ul').parent('li').parent('ul').prev('a').text()),
+            "grp3" : $.trim(jQuery(this).parent('li').parent('ul').parent('li').parent('ul').parent('li').parent('ul').prev('a').text())
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+    // cisco logo icon  on top left -----2018/07/19
+    try {
+        cdc.util.addMetricsRule(".top-header-center a[class='community_logo'], div[class='community_logo']",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_shp",
+        "linktext" : "cisco_logo"
+        });
+    }
+    catch(err) {}
+        
+    // cisco community logo  on top left next to cisco logo  -----2018/07/19
+    try {
+        cdc.util.addMetricsRule(".top-header-center a[class='community-title']",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_shp"
+        });	
+    }
+    catch(err) {}
+    
+    //community feed back button top right before the language selector ------2018/07/19
+    try {
+        jQuery(document).on("mousedown","div[class='SkipThisFixedPosition walkme-custom-icon-outer-div walkme-launcher-id-188282 walkme-custom-launcher-outer-div walkme-text-launcher custom-launcher-166558 walkme-icon-root-Launcher-188282 walkme-not-embed']", 
+        function() {
+            var obj = {
+                  ntpagetag : {
+              "lpos":"csc_header", 
+              "lid" :"csc_header_shp",
+            "linktext" : "community feedback"
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+    
+  /*   -----2018/07/19
+  //click on hamburger-----its now called a core nav
+  cdc.util.addMetricsRule('.lia-slide-menu-trigger.lia-slide-out-nav-menu-wrapper',{
+      "lpos":"csc_header", 
+      "lid" :"csc_header_ham_click"
+  });
+  
+  //browse within hamburger
+  cdc.util.addMetricsRule('.lia-slide-menu-content a',{
+      "lpos":"csc_header", 
+      "lid" :"csc_header_ham_browse"
+  });
+  
+  
+  //close nav button in the hamburger browse 
+  cdc.util.addMetricsRule('.lia-slide-menu-trigger.lia-nav-icon.lia-nav-icon-left',{
+      "lpos":"csc_header", 
+      "lid" :"csc_header_ham_browse"
+  });
+  
+  */
+  
+  /*------2018/07/19
+  //cisco support home page link on the header 
+  cdc.util.addMetricsRule('.lia-component-nodes-widget-community-title',{ 
+      "lpos":"csc_header", 
+      "lid" :"csc_header_csc_hp"
+  });
+  
+  
+  //messages icon on the header 
+  cdc.util.addMetricsRule("#privateNotesSummary2 a",{
+      "lpos":"csc_header", 
+      "lid" :"csc_header_profile_messages",
+    "linktext" : "messages"
+  });
+  
+  
+  
+  
+  //notifications icon on the header 
+  cdc.util.addMetricsRule("#indicator a",{
+      "lpos":"csc_header", 
+      "lid" :"csc_header_profile_notifications",
+    "linktext" : "notifications"
+  });
+  
+  
+  //profile icon on the header 
+  jQuery("body").on("mousedown", "#display",
+            function() {
+                      var obj = {
+          ntpagetag : {
+                                "lpos"                      : "csc_header", 
+                                "lid"                       : "csc_header_profile_name",
+                                "linktext"                 : jQuery(this).attr("title"),
+                                "link"                       : jQuery(this).attr('href')                
+          }
+      };
+      trackEvent.event("link", obj); 
+    });  
+    
+    
+  
+  //clicks on the display dropdown of the profile
+  jQuery("body").on("mousedown", "#userNavDropdown a",
+            function() {
+                      var obj = {
+          ntpagetag : {
+                                "lpos"                      : "csc_header", 
+                                "lid"                       : "csc_header_profile_dropdown",
+                                "linktext"                 : jQuery(this).text(),
+                                "link"                       : jQuery(this).attr('href')                
+          }
+      };
+      trackEvent.event("link", obj); 
+    }); 
+  
+  */
+
+    //clicks on the register link
+    try {
+        cdc.util.addMetricsRule(".custom-register-link",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_profile_register"
+        });
+    }
+    catch(err) {}
+        
+    //clicks on the login link
+    try {
+        cdc.util.addMetricsRule("#loginPageV2",{
+          "lpos":"csc_header", 
+          "lid" :"csc_header_profile_login"
+        });
+    }
+    catch(err) {}
+
+    //feedback link
+    try {
+        cdc.util.addMetricsRule(".StringDisplayTaplet a",{
+          "lpos":"csc_body", 
+          "lid" :"csc_body_feedback"
+        });
+    }
+    catch(err) {}
+
+    // Back to top
+    try {
+        cdc.util.addMetricsRule(".li-common-scroll-to-link",{
+          "lpos":"csc_footer", 
+          "lid" :"csc_back_to_top"
+        }); 
+    }
+    catch(err) {}
+
+    //social links
+    try {
+        cdc.util.addMetricsRule(".footer-social-links a",{
+          "lpos":"csc_footer", 
+          "lid" :"csc_footer_social"
+        }); 
+    }
+    catch(err) {}
+        
+    //footer links
+    try {
+        cdc.util.addMetricsRule(".text-left a",{
+          "lpos":"csc_footer", 
+          "lid" :"csc_footer_legal"
+        });
+
+        cdc.util.addMetricsRule(".flex-inline a[href='http://www.cisco.com']",{
+          "lpos":"csc_footer", 
+          "lid" :"csc_footer_legal", 
+        "linktext" : "cisco"
+        });
+    }
+    catch(err) {}
+
+    //breadcrumb in the search box
+    try {
+        cdc.util.addMetricsRule(".BreadCrumb a",{
+          "lpos":"csc_breadcrumb", 
+          "lid" :"csc_breadcrumb"
+        });
+    }
+    catch(err) {}
+        
+    //click on the options in the search box
+    try {
+        cdc.util.addMetricsRule(".lia-quilt-column-sub-header-main #actionMenuDropDown a",{
+          "lpos":"csc_options", 
+          "lid" :"csc_options_click"
+        });
+    }
+    catch(err) {}
+
+    //click on the dropdown for options
+    try {
+        cdc.util.addMetricsRule(".lia-quilt-column-sub-header-main #dropdownmenuitems a",{
+          "lpos":"csc_options", 
+          "lid" :"csc_options_dropdown"
+        });
+    }
+    catch(err) {}
+        
+  //community news links 
+        
+    //home links
+    try {
+        cdc.util.addMetricsRule(".view_all a",{
+          "lpos":"csc_body_commnews", 
+          "lid" :"csc_body_commnews_homelinks"
+        });
+    }
+    catch(err) {}
+        
+    // links in the box containers
+    try {
+        cdc.util.addMetricsRule(".news-subject a",{
+          "lpos":"csc_body_commnews", 
+          "lid" :"csc_body_commnews_news"
+        });
+    }
+    catch(err) {}
+        
+    //click on any link in popular docs
+    try {
+        cdc.util.addMetricsRule(".custom-popular-documents  a",{
+          "lpos":"csc_popular", 
+          "lid" :"csc_popular_docs"
+        });
+    }
+    catch(err) {}
+        
+    //clicks on the links in popular events
+    try {
+        cdc.util.addMetricsRule(".custom-popular-events a",{
+          "lpos":"csc_popular", 
+          "lid" :"csc_popular_events"
+        });
+    }
+    catch(err) {}
+        
+    //clicks on any link in popular blogs
+    try {
+        cdc.util.addMetricsRule(".custom-popular-blogs a",{
+          "lpos":"csc_popular", 
+          "lid" :"csc_popular_blogs"
+        });
+    }
+    catch(err) {}
+        
+    //create component
+    try {
+        cdc.util.addMetricsRule(".custom-new-post a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_create"
+        });
+    }
+    catch(err) {}
+        
+    //related content links
+    try {
+        cdc.util.addMetricsRule(".custom-related-content a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_related_content"
+        });
+
+        cdc.util.addMetricsRule(".custom-related-content .related-boards .dropdown-menu a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_related_content_discussions_dd"
+        });
+    }
+    catch(err) {}
+        
+    //recomended content
+    try {
+        cdc.util.addMetricsRule("#recommendedContentTaplet_container a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_reco"
+        });
+    }
+    catch(err) {}
+        
+    //leaderbaord clicks
+    try {
+        cdc.util.addMetricsRule(".KudoedAuthorsLeaderboardTaplet a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_leaderboard"
+        });
+    }
+    catch(err) {}
+  
+  //scrolling let us help--------------2018/07/19
+  // click on the community help button to expand selection-----2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='walkme-title walkme-override walkme-css-reset']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_scroll_help", 
+              "lid" :"csc_comm_help_open",
+                "linktext" : $(this).text()
+                }
+            };
+            trackEvent.event("link", obj);
+        });
+    }
+    catch(err) {}
+        
+    //close community help widget    -----------------2018/07/22
+    try {
+        jQuery("body").on("mousedown", "div[class='walkme-minimize walkme-icon-font walkme-menu-click-close walkme-animation-hide walkme-override walkme-css-reset']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_scroll_help", 
+              "lid" :"csc_comm_help_close",
+                "linktext" : "close_comm_help"
+                }
+            };
+            trackEvent.event("link", obj); 
+        }); 
+    }
+    catch(err) {}
+  
+    //links under the community help expandable menu -----2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='walkme-deployable-name walkme-name walkme-override walkme-css-reset']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_scroll_help", 
+              "lid" :"csc_community_help_links",
+                "linktext" : $(this).text()
+                }
+            };
+            trackEvent.event("link", obj); 
+        }); 
+    }
+    catch(err) {}
+
+  //search in the scroll community help ------2018/07/19
+    //search by entering keyword and hit search button  ------2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='walkme-search-box-button  walkme-loading-hide walkme-override walkme-css-reset']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_scroll_help", 
+              "lid" :"csc_community_help_search",
+              "linktext" : $(this).prev().val()
+                }
+            };
+            trackEvent.event("link", obj);
+        }); 
+    }
+    catch(err) {}
+
+    //select the suggestion after entering keyword               ----2018/07/22        
+    try {
+        jQuery("body").on("mousedown", "div[class='walkme-search-results-list-inner walkme-override walkme-css-reset'] div[class='walkme-deployable-name walkme-name walkme-override walkme-css-reset']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_scroll_help", 
+              "lid" :"csc_community_help_search_results",
+              "linktext" : $(this).text(),
+            "kw" : $("input[class='walkme-search-box walkme-loading-hide walkme-override walkme-css-reset']").val()
+                }
+            };
+            trackEvent.event("link", obj);
+        }); 
+    }
+    catch(err) {}
+
+    //click on the create new button------2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='lia-decoration-border-content'] div[class='walkme-icon-image-div walkme-launcher-image-div']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_right_nav", 
+              "lid" :"csc_create_new",
+                "linktext" : $(this).text()
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+    //click on the subscribe button------2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='SkipThisFixedPosition walkme-custom-icon-outer-div walkme-launcher-id-188307 walkme-custom-launcher-outer-div walkme-text-launcher custom-launcher-166265 walkme-icon-root-Launcher-188307 walkme-not-embed'] div[class='walkme-icon-image-div walkme-launcher-image-div']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_search_box", 
+              "lid" :"csc_subscribe",
+                "linktext" : $(this).text()
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+    //subscribe button on board page only------2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='SkipThisFixedPosition walkme-custom-icon-outer-div walkme-launcher-id-187848 walkme-custom-launcher-outer-div walkme-text-launcher custom-launcher-166265'] div[class='walkme-icon-image-div walkme-launcher-image-div']", 
+        function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_right_nav", 
+              "lid" :"csc_subscribe",
+                "linktext" : $(this).text()
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+    //top solution author clicks --2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='SolutionAuthorsLeaderboard_container'] div[class='UserList lia-component-users-widget-user-list'] table tbody tr td div div a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_top_sol_author"
+        });
+
+        cdc.util.addMetricsRule("div[class='SolutionAuthorsLeaderboard_container'] div[class='lia-view-all'] a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_top_sol_author"
+        });
+    }
+    catch(err) {}
+
+    //click on the channel blogs in cat pages ----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='feed-title'] a",{
+          "lpos":"csc_channel", 
+          "lid" :"csc_channel_blogs"
+        });
+    }
+    catch(err) {}
+  
+    //cliks on custom content widget(getting involved) and (customer resources) under top experts  ----2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='lia-panel lia-panel-standard CustomContent Chrome lia-component-common-widget-custom-content'] a", 
+        function() {
+            var obj = {
+              ntpagetag : {
+                "lpos":"csc_right_nav", 
+                "lid" :$(this).parent('li').parent('ul').parent('div').parent('div').prev('div').children('span').text(),
+                "linktext" : $.trim(jQuery(this).text()),
+                "link" : jQuery(this).attr('href') 
+                }
+            };
+        trackEvent.event("link", obj); 
+        });	
+    }
+    catch(err) {}
+  
+    //click on the add display on the right bottom corner  -----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='lia-panel-content-wrapper'] div[class='lia-panel-content'] div[class='panel panel--bordered'] a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_right_nav_player_leaderboard_add"
+        });
+    }
+    catch(err) {}
+
+    //click on the review to get amazon gift card  -----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='base-margin-top col-md-12 padding-0'] div[class='panel panel--bordered'] a",{
+          "lpos":"csc_right_nav", 
+          "lid" :"csc_right_nav_review_giftcard"
+        });
+    }
+    catch(err) {}
+  
+  /*
+  //click on the twitter feed  -----2018/07/19   (need to add the ctm.js to the iframe )
+  
+  jQuery("body").on("mousedown", "iframe[class='twitter-timeline twitter-timeline-rendered']", 
+  function() {
+    var obj = {
+      ntpagetag : {
+        "lpos" : "csc_right_nav", 
+        "lid" : "csc_twitter_widget",
+       "linktext" : $.trim(jQuery(this).text()),
+        "link" : jQuery(this).attr('href') 
+  
+      }
+    };
+    trackEvent.event("link", obj); 
+  });	
+  
+  */
+        
+    // consolidated banner click on the center of the page  -----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='lia-panel lia-panel-standard StringDisplayTaplet Chrome lia-component-common-widget-announcement'] a",{
+          "lpos":"csc_consolidated_banner", 
+          "lid" :"csc_under_breadcrumb",
+        "linktext" : "get_the_latest_update"
+        });
+    }
+    catch(err) {}
+
+    //links on the blade below search -----2018/07/19
+    try {
+        cdc.util.addMetricsRule(".custom-top-nav-wrapper .custom-sub-nav li a",{
+          "lpos":"csc_body_sub_nav", 
+          "lid" :"csc_nav_links_under_search_box"
+        }); 
+    }
+    catch(err) {}
+
+    //UserName (put the other rule for capturing all the missing profile clicks)
+    try {
+        jQuery("body").on("mousedown", ".lia-user-name-link", 
+        function() {
+            var obj = {
+              ntpagetag : {
+                "lpos" : "csc_profile", 
+                "lid" : "csc_profile_click",
+                "linktext" : $.trim(jQuery(this).text()),
+                "link" : jQuery(this).attr('href') 
+              }
+            };
+            trackEvent.event("link", obj); 
+        });	
+  
+        cdc.util.addMetricsRule(".profileCard a",{
+          "lpos":"csc_profile", 
+          "lid" :"csc_profile_pop_up"
+        });
+    }
+    catch(err) {}
+      
+    try {
+        jQuery("body").on("mousedown", "li[class='has-children'] a",
+        function() {
+            var selectedText = $(this)[0].text;
+            var nodeText = [];
+            $(".has-children a[href='#']").map(function(){
+                if(this.parentElement.className == "has-children"){
+                    nodeText.push(this.text);
+                }
+            });
+            $(this).parents().map(function(index) {
+                if(this.className == "has-children"){
+                    var parentText = this.textContent.split(" ")[1];
+                if(parentText == nodeText[0]){   
+                    var data_lid = "csc_header_topics";
+                }
+                else if (parentText == nodeText[1]){
+                    var data_lid = "csc_header_experts";
+                }
+                else if (parentText == nodeText[2]) {
+                    var data_lid = "csc_header_events";
+                }
+                else if (parentText == nodeText[3]) {
+                    var data_lid = "csc_header_community";
+                }
+                var obj = {
+                ntpagetag : {
+                  "lpos" : "csc_header",
+                  "lid" : (index != 0) ? data_lid : selectedText,
+                  "linktext" : selectedText
+                    }
+                };
+                trackEvent.event("link", obj);
+                }
+            });                          
+        });
+    }
+    catch(err) {}
+  ///////////////////////////////////////////////////////////////////////////////////framework code end 
+  
+  ///////////////////////////////////////////////////////////home page code start
+  
+  
+  //links under welcome to technology and support   ----2018/07/19
+    //home links    
+    try {
+        cdc.util.addMetricsRule(".CategoryPage .home-links a",{
+          "lpos":"csc_body_hp_tech_and_sup", 
+          "lid" :"home links"
+        }); 
+    }
+    catch(err) {}
+
+    //links on the icons blade for the topics  under technology and support  ----2018/07/19
+    try {
+        cdc.util.addMetricsRule("li[class='tiles panel--bordered-left cell'] ul li a",{
+          "lpos":"csc_body_hp_tech_and_sup", 
+          "lid" :"home links"
+        });
+    }
+    catch(err) {}
+
+    //links in the other topics blade  ----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='otherTopics text-large half-margin-top'] a",{
+          "lpos":"csc_body_hp_other_topics", 
+          "lid" :"home links"
+        });
+    }
+    catch(err) {}
+
+    //click on  view all link under "latest topics"    ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-panel lia-panel-standard MessageListTaplet Chrome lia-component-forums-widget-recent-threads'] a[class='lia-link-navigation view-all-link']",{
+          "lpos":"csc_body_hp_latest_topics", 
+          "lid" :"home links"
+        });
+    }
+    catch(err) {}
+
+    //clicks on profile in message author column   ------2018/07/22   -------corrected
+    try {
+        jQuery("body").on("mousedown", "td[class='messageAuthorColumn lia-data-cell-secondary lia-data-cell-text'] a[class='lia-link-navigation lia-page-link lia-user-name-link']", (function() {
+            var obj = {
+              ntpagetag : {
+              "lpos":"csc_body_hp_latest_topics", 
+              "lid" :"message_author_profile",
+              "linktext" : jQuery(this).text()
+                }
+            };
+            trackEvent.event("link", obj); 
+        }));
+    }
+    catch(err) {}
+  
+    //clicks on the content under Subject in "latest topics"    ----2021/10/20
+    try {
+        jQuery("body").on("mousedown", "div[class= 'lia-panel lia-panel-standard MessageListTaplet Chrome lia-component-forums-widget-recent-threads'] div[class='MessageSubject'] div h2[class='message-subject'] span a",
+        (function() {
+            var obj = {
+              ntpagetag : {
+                "lpos" : "csc_body_hp_latest_topics", 
+                "lid" : $(this).parent('span').parent('h2').parent('div').parent('div').children('div[class="message-subject-board"]').children('a').text(),
+                "linktext" : $.trim(jQuery(this).text()),
+                "link" :jQuery(this).attr('href') 
+                }
+            };
+            trackEvent.event("link", obj); 
+        }));
+    }
+    catch(err) {}
+        
+    //clicks on the links under subject for message board in latest topics  -----2021/10/20
+    try {
+        jQuery("body").on("mousedown", "div[class= 'lia-panel lia-panel-standard MessageListTaplet Chrome lia-component-forums-widget-recent-threads'] div[class='MessageSubject'] div[class='message-subject-board'] a",
+        (function() {
+            var obj = {
+              ntpagetag : {
+                "lpos" : "csc_body_hp_latest_topics", 
+                "lid" : $.trim($(this).parent('div').prev('div').children('h2').children('span').children('a').text()),
+                "linktext" : $.trim(jQuery(this).text()),
+                "link" :jQuery(this).attr('href')
+                }
+            };
+            trackEvent.event("link", obj); 
+        }));
+    }
+    catch(err) {}
+/*  //clicks on the content under Subject in "latest topics"    ----2018/07/19
+  
+  jQuery("body").on("mousedown", "div[class='MessageSubject'] div h2[class='message-subject'] span a", (function() {
+    var obj = {
+      ntpagetag : {
+        "lpos" : "csc_body_hp_latest_topics", 
+        "lid" : $(this).parent('span').parent('h2').parent('div').parent('div').children('div[class="message-subject-board"]').children('a').text(),
+        "linktext" : $.trim(jQuery(this).text()),
+        "link" :jQuery(this).attr('href') 
+      }
+    };
+    trackEvent.event("link", obj); 
+  }));
+  
+  
+  
+  //clicks on the links under subject for message board in latest topics  -----2018/07/19 
+  
+  jQuery("body").on("mousedown", "div[class='MessageSubject'] div[class='message-subject-board'] a", (function() {
+    var obj = {
+      ntpagetag : {
+        "lpos" : "csc_body_hp_latest_topics", 
+        "lid" : $.trim($(this).parent('div').prev('div').children('h2').children('span').children('a').text()),
+        "linktext" : $.trim(jQuery(this).text()),
+        "link" :jQuery(this).attr('href')
+      }
+    };
+    trackEvent.event("link", obj); 
+  }));
+*/ 
+  
+  /* "author" : $('this').parent('div').parent('div').parent('div').parent('td').next('td').children('div').children('div').children('div').children('div').children('span').children('a').children('span').text() */
+  
+  
+  /*
+  //links on the sub topic headers
+  
+  jQuery("body").on("mousedown", ".custom-category-tiles .cat-tile .cat-name a", (function() {
+    var obj = {
+      ntpagetag : { 
+        "lpos" : "csc_body_hp_topics", 
+        "lid" : jQuery(this).text(),
+        "linktext" : jQuery(this).text(),
+        "link" :jQuery(this).attr('href') 
+      }
+    };
+    trackEvent.event("link", obj); 
+  }));
+  
+  
+  
+  //links in the sub section 
+  
+  jQuery("body").on("mousedown", ".custom-category-tiles .cat-tile .boards-list a ", (function() {
+    var obj = {
+      ntpagetag : {
+        "lpos" : "csc_body_hp_topics", 
+        "lid" : $(this).parent("li").parent("ul").siblings("div[class='cat-name']").children("a").text(),
+        "linktext" : jQuery(this).text(),
+        "link" :jQuery(this).attr('href') 
+      }
+    };
+    trackEvent.event("link", obj); 
+  }));
+  
+  //more 
+  
+  jQuery("body").on("mousedown", ".custom-category-tiles .cat-tile .all-topics a", (function() {
+    var obj = {
+      ntpagetag : {
+        "lpos" : "csc_body_hp_topics", 
+        "lid" : $(this).parent("div").siblings("div[class='cat-name']").children("a").text(),
+        "linktext" : jQuery(this).text(),
+        "link" :jQuery(this).attr('href') 
+      }
+    };
+    trackEvent.event("link", obj); 
+  }));
+  
+  */
+  //links under latest discussions
+    // home links
+    try {
+        cdc.util.addMetricsRule(".CategoryPage .custom-latest-discussions .heading-view-all a",{
+          "lpos":"csc_body_hp_discussions", 
+          "lid" :"home links" 
+        });
+    }
+    catch(err) {}
+        
+  // topic links under latest discussions
+    //latest discussions- topic  links
+    try {
+        jQuery("body").on("mousedown", ".custom-latest-discussions .MessageSubjectIcons a", (function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos"                      : "csc_body_hp_discussions", 
+                    "lid"                       : "csc_body_hp_discussions_thread",
+                    "linktext"                 : $.trim($(this).text()),
+                    "topicname"                : $(this).parent("span").parent("h2").parent("div").siblings("div[class='message-subject-board']").children("a").text(),
+                    "auhtorname"  :$(this).parent("span").parent("h2").parent("div").parent("div").parent("div").parent("td").siblings("td").children("div").children("div").children("div").children("span").children("a").text(), 
+                    "link"                       :jQuery(this).attr('href')              
+              }
+          };
+          trackEvent.event("link", obj); 
+        }));
+    }
+    catch(err) {}
+  
+    //latest discussions- board links below the threads
+    try {
+        jQuery("body").on("mousedown", ".custom-latest-discussions .message-subject-board a", (function() {
+            var obj = {
+                  ntpagetag : {
+                      "lpos"                      : "csc_body_hp_discussions", 
+                      "lid"                       : "csc_body_hp_discussions_board",
+                      "linktext"                 : jQuery(this).text(),
+                      "topicname" : $.trim($(this).parent("div").siblings("div[class='MessageSubjectIcons ']").children("h2").children("span").children("a").text()),
+                      "auhtorname":$(this).parent("div").parent("div").parent("div").parent("td").siblings("td").children("div").children("div").children("div").children("span").children("a").text(),    
+                      "link"                       :jQuery(this).attr('href')              
+                  }
+              };
+              trackEvent.event("link", obj); 
+        }));
+    }
+    catch(err) {}
+        
+    //author column clicks 
+    try {
+          cdc.util.addMetricsRule(".CategoryPage .custom-latest-discussions .messageAuthorColumn a",{
+              "lpos":"csc_body_hp_discussions", 
+              "lid" :"author"
+          }); 
+    }
+    catch(err) {}
+     
+    //time clicks
+    try {
+        cdc.util.addMetricsRule(".CategoryPage .custom-latest-discussions .latestPostDateColumn .MessagePostDateAndAuthorCell a",{
+          "lpos":"csc_body_hp_discussions", 
+          "lid" :"latest post"
+        });
+    }
+    catch(err) {}
+  
+  /////////////////////////////////////////////////////////////////////////////////////////end of home page 
+  
+    
+  ///////////////////////////////////////////////////////start of search section
+  // CSC search - type search kw and hit enter - 
+  
+  /*
+  //for home page search     ------2018/07/19
+  jQuery("body").on("keypress", ".lia-search-input-field input", 
+  function (e) {
+  var key = e.which;
+  if(key == 13)  // the enter key code
+             var obj = {
+          ntpagetag : {
+                                "ev"                        : "link",
+                                "lpos"                      : "csc_search_box", 
+                                "lid"                       : "csc_search_kw",
+                                "linktext"                 : $('input[id="searchField"]').val(),
+                                "link"                       : jQuery(location).attr('href'),
+                                "kw"               : $('input[id="searchField"]').val(),
+                  "rsltcnt" : $.trim($(".search-result-count").text())              
+          }
+      };
+      trackEvent.event("link", obj);
+    });  
+    
+  
+    
+  //for search page search   ------2018/07/19
+    
+  jQuery("body").on("keypress", ".lia-search-input-field input", 
+  function (e) {
+  var key = e.which;
+  if(key == 13)  // the enter key code
+             var obj = {
+          ntpagetag : {
+                                "ev"                        : "link",
+                                "lpos"                      : "csc_search_box", 
+                                "lid"                       : "csc_search_kw",
+                                "linktext"                 : $('input[id="messageSearchField"]').val(),
+                                "link"                       : jQuery(location).attr('href'),
+                                "kw"               : $('input[id="messageSearchField"]').val(),
+                  "rsltcnt" : $.trim($(".search-result-count").text())              
+          }
+      };
+      trackEvent.event("link", obj);
+    });   
+    
+  */
+  
+  
+    
+  // CSC search - type search kw and hit enter - 
+    //for home page search     ------2018/07/22
+    try {
+        jQuery("body").on("keypress", "span[class='lia-search-input-field'] div[class='search-main-content'] input[class='lia-form-type-text lia-autocomplete-input search-input lia-search-input-message']", 
+        function (e) {
+            var key = e.which;
+            if(key == 13) { // the enter key code
+                var obj = {
+                    ntpagetag : {
+                        "ev"                        : "link",
+                        "lpos"                      : "csc_search_box", 
+                        "lid"                       : "csc_search_kw",
+                        "linktext"                 : $('input[id="searchField"]').val(),
+                        "link"                       : jQuery(location).attr('href'),
+                        "kw"               : $('input[id="searchField"]').val()
+                    }
+                };
+                trackEvent.event("link", obj);
+            }
+        });  
+    }
+    catch(err) {}
+        
+    //for search page search   ------2018/07/23                         
+    try {
+        jQuery("body").on("keypress", "span[class='lia-search-input-field'] input[id='messageSearchField']", 
+        function (e) {
+            var key = e.which;
+            if(key == 13)  {// the enter key code
+                var obj = {
+                    ntpagetag : {
+                        "ev"                        : "link",
+                        "lpos"                      : "csc_search_box", 
+                        "lid"                       : "csc_search_kw",
+                        "linktext"                 : $('input[id="messageSearchField"]').val(),
+                        "link"                       : jQuery(location).attr('href'),
+                        "kw"               : $('input[id="messageSearchField"]').val()              
+                    }
+                };
+                trackEvent.event("link", obj);
+            }
+        });
+    }
+    catch(err) {}
+  
+  // CSC search  - type search kw and hit the search button
+  
+  
+    //for home page search ------2018/07/23    
+    try {
+        $("div[class='search-main-content'] input[id='autoSuggest']").mousedown(
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "ev" : "link",
+                    "lpos" : "csc_search_box", 
+                    "lid" : "csc_search_kw",
+                    "linktext" : $('input[id="searchField"]').val(),
+                    "link" : jQuery(location).attr('href'),
+                    "kw" : $('input[id="searchField"]').val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+        
+    //for search page ------2018/07/23
+    try {
+        $("input[id='submitContext']").mousedown(
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "ev" : "link",
+                    "lpos" : "csc_search_box", 
+                    "lid" : "csc_search_kw",
+                    "linktext" : $('input[id="messageSearchField"]').val(),
+                    "link" : jQuery(location).attr('href'),
+                    "kw" : $('input[id="messageSearchField"]').val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+
+  // CSC search - type a keyword and select from the suggestion list and go   ------2018/07/19    -----check on the bracket before the function 
+    try {
+        jQuery("body").on("mousedown", "div[class='lia-autocomplete-content'] ul li a",
+        (function() {
+            var obj = {
+                ntpagetag : {
+                    "ev" : "link",
+                    "lpos" : "csc_search_box", 
+                    "lid" : "csc_autosug_list",
+                    "linktext" : jQuery(this).text(),
+                    "link" :jQuery(this).attr('href'), 
+                    "kw" : $('input[id="searchField"]').val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        }));
+    }
+    catch(err) {}
+   
+    //clear search 
+    try {
+        jQuery("#clearSearchButton").mousedown(
+        function() {
+            setTimeout( function() { var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_box", 
+                    "lid" : "csc_search_clear",
+                    "linktext" : "clear",
+                    "link" : jQuery(this).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); }, 3000);
+        });
+    }
+    catch(err) {}
+
+    //turn off suggestions 
+    try {
+        cdc.util.addMetricsRule("div[class='lia-autocomplete-footer'] a",{
+          "lpos":"csc_search_box", 
+          "lid" :"csc_autosug_off"
+        }); 
+    }
+    catch(err) {}
+
+    //turn on suggestions 
+    try {
+        cdc.util.addMetricsRule("div[class='search-autocomplete-toggle-link'] a",{
+          "lpos":"csc_search_box", 
+          "lid" :"csc_autosug_on"
+        }); 
+    }
+    catch(err) {}
+  /////////////////////////link clicks
+  
+    //ciscoSearchlink on the top right
+    try {
+        jQuery("body").on("mousedown", ".lia-component-search-menubar #ciscoSearch a", 
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_results", 
+                    "lid" : "csc_results_cdc_search_link",
+                    "linktext" : jQuery(this).text(),
+                    "link" : jQuery(this).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val() ,
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+              
+    //Message Subject
+    try {
+        jQuery("body").on("mousedown", ".lia-component-search-results .page-link", 
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_results", 
+                    "lid" : "csc_results_link_click",
+                    "linktext" : jQuery(this).text(),
+                    "link" : jQuery(this).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj);
+        });
+    }
+    catch(err) {}
+  
+    //message-board
+    try {
+        jQuery("body").on("mousedown", ".lia-component-search-results .lia-link-navigation.lia-message-board-link",
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_results", 
+                    "lid" : "csc_results_board_click",
+                    "linktext" : jQuery(this).text(),
+                    "link" : jQuery(this).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+        
+    //dropdown
+    try {
+        jQuery(".lia-component-quilt-search-page-thread-filters .lia-common-dropdown a").mousedown(
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_filter", 
+                    "lid" : "csc_filter_dropdown",
+                    "linktext" : $(this).text(),
+                    "link" : jQuery(location).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val(),
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+  
+    //author dropdown search select from auto suggest
+    try {
+        jQuery(".lia-component-quilt-search-page-thread-filters .lia-autocomplete-container-inline").mousedown(
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_filter", 
+                    "lid" : "csc_filter_author",
+                    "linktext" : jQuery("#userSearchField").val(),
+                    "link" : jQuery(location).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val() ,
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+    //author dropdown search slect by enter
+    try {
+        jQuery("#userSearchField").keypress(function(e) {
+            var key = e.which;
+            if(key == 13) // the enter key code
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_search_filter", 
+                    "lid" : "csc_filter_author",
+                    "linktext" : jQuery("#userSearchField").val(),
+                    "link" : jQuery(location).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val() ,
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+  
+    //check box selection in the filter dropdown
+    try {
+        jQuery("body").on("mousedown", "div[class='SearchToggleFieldFilter'] span input[class='filter-toggle ng-pristine ng-untouched ng-valid']", 
+        function() { 
+            var lid1 = $.trim($(this).parent("span").parent("div").parent("li").parent("ul").parent("div").siblings("div").text());
+            var lid2 = "csc_filter_"+lid1;
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_filter", 
+                    "lid" : lid2,
+                    "linktext" : $(this).attr("value"),
+                    "link" : jQuery(location).attr('href'),
+                    "kw" : jQuery("#messageSearchField").val() ,
+                    "rsltcnt" : $.trim($(".search-result-count").text()) 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+        
+    //search results pagination
+    try {
+        cdc.util.addMetricsRule(".lia-component-search-results-pager .lia-paging-full a",{
+          "lpos":"csc_search_results", 
+          "lid" :"csc_results_pagination"
+        });
+    }
+    catch(err) {}
+        //////////////////////////////////////////////////////////////////end of search metrics
+
+        ///////////////////////////////////////////////Category Page
+
+
+    //click on board or category link
+    try {
+        cdc.util.addMetricsRule(".CategoryPage .boardTitleColumn .board-title a",{
+          "lpos":"csc_body_cat", 
+          "lid" :"csc_body_cat_board"
+        }); 
+    }
+    catch(err) {}
+        
+    //click on the latest post from under the board/category link
+    try {
+        cdc.util.addMetricsRule(".CategoryPage .boardTitleColumn .board-list-latest a",{
+          "lpos":"csc_body_cat", 
+          "lid" :"csc_body_cat_latest_post_col1"
+        });
+    }
+    catch(err) {}
+        
+    //click on latest post by clicking the date/time from the latest post column
+    try {
+        cdc.util.addMetricsRule(".CategoryPage .recentMessageTimeColumn a",{
+          "lpos":"csc_body_cat", 
+          "lid" :"csc_body_cat_latest_post_col4"
+        });
+    }
+    catch(err) {}
+
+
+    //click on the new dynamic template creator/editor on the category pages   -----2018/07/19
+    try {
+        cdc.util.addMetricsRule(".editable-blog-view-container a",{
+          "lpos":"csc_body_cat", 
+          "lid" :"csc_body_cat_editable"
+        });
+    }
+    catch(err) {}
+
+  /////////////////////////////////////////////////end of category page
+   
+  ////////////////////////////////////////////////////recomendation modules   ----2021/10/22
+  //////pos metric logic not working,dev team to help with logic 
+  
+  /*cdc.util.addMetricsRule("div[class='lia-panel lia-panel-standard MessageListTaplet Chrome lia-component-recommendations-widget-recommended-content-taplet'] a", {				 								
+            "lpos"                 : "csc_reco",
+			"lid"                 : "csc_reco_1",
+			"pos" : $("tr").index($(this).parent("div[class='tbody']")),
+			"lc": window.location.href	
+  });	
+
+
+
+  cdc.util.addMetricsRule("div[class='lia-panel lia-panel-standard MessageListTaplet Chrome custom-lia-component-recommendations-widget-recommended-content-taplet'] a", {				 								
+            "lpos"                 : "csc_reco",
+			"lid"                 : "csc_reco_2",
+			"pos" : $("tr").index($(this).parent("div[class='tbody']")),
+            "lc": window.location.href	
+  });*/
+
+    try {
+        jQuery("body").on("mousedown",".lia-panel.lia-panel-standard.MessageListTaplet.Chrome.lia-component-recommendations-widget-recommended-content-taplet tr a", function (e) {
+            var obj = {
+                ntpagetag : {
+                    "lpos": "csc_reco",
+                    "lid": "csc_reco_1",
+                    "pos" : jQuery(this).closest('tr').index() + 1,
+                    "linktext" : jQuery.trim($(this).text()),
+                    "lc": window.location.href,
+                    "reco_link": jQuery(this).attr('href')
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+
+        jQuery("body").on("mousedown",".lia-panel.lia-panel-standard.MessageListTaplet.Chrome.custom-lia-component-recommendations-widget-recommended-content-taplet tr a", function (e) {
+            var obj = {
+                ntpagetag : {
+                    "lpos": "csc_reco",
+                    "lid": "csc_reco_2",
+                    "pos" : jQuery(this).closest('tr').index() + 1,
+                    "linktext" : $(this).attr('data-attr-text'),
+                    "lc": window.location.href,
+                    "reco_link": jQuery(this).attr('href')
+                }
+            };
+            trackEvent.event("link", obj); 
+        });  
+    }
+    catch(err) {}
+  ///////////////////////////////////////////////////////////////end of recommendation modules
+  
+  /////////////////////////////////////////////////////////////////////////////// bd forum page
+  
+    //links in the discussion -- forum content
+    try {
+        cdc.util.addMetricsRule(".ForumPage .cMessageAuthorAvatarColumn a[class*='UserAvatar']",{
+          "lpos":"csc_body_board_forum", 
+          "lid" :"csc_body_board_forum",
+        "linktext" : "user avatar"
+        });
+
+        cdc.util.addMetricsRule(".ForumPage .cThreadInfoColumn .MessageSubjectIcons a",{
+          "lpos":"csc_body_board_forum", 
+          "lid" :"csc_body_board_forum"
+        });
+    }
+    catch(err) {}
+        
+    //all solutions
+    try {
+        cdc.util.addMetricsRule(".ForumPage .lia-component-solutions-widget-recently-solved-threads .lia-view-all a",{
+          "lpos":"csc_right_nav_board_forum", 
+          "lid" :"csc_right_nav_board_forum_all_sol"
+        });
+
+        cdc.util.addMetricsRule(".ForumPage .lia-component-solutions-widget-recently-solved-threads .MessageSubjectIcons a",{
+          "lpos":"csc_right_nav_board_forum", 
+          "lid" :"csc_right_nav_board_forum_all_sol"
+        });
+    }
+    catch(err) {}
+        
+    //unanswered topics 
+    try {
+        cdc.util.addMetricsRule(".ForumPage .lia-component-forums-widget-unanswered-topics-taplet .lia-view-all a",{
+          "lpos":"csc_right_nav_board_forum", 
+          "lid" :"csc_right_nav_board_forum_unans"
+        });
+
+        cdc.util.addMetricsRule(".ForumPage .lia-component-forums-widget-unanswered-topics-taplet .lia-message-unread a",{
+          "lpos":"csc_right_nav_board_forum", 
+          "lid" :"csc_right_nav_board_forum_unans"
+        });
+    }
+    catch(err) {}
+  
+    //label clicks on top ----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_board_forum", 
+          "lid" :"csc_body_board_forum_labels"
+        });
+    }
+    catch(err) {}
+        
+    //labels clicks in messages ----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='t-data-grid single-message-list'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_board_forum", 
+          "lid" :"csc_body_board_forum_mesages_labels"
+        });
+    }
+    catch(err) {}
+
+    //pagination clicks -----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='lia-paging-full'] li a",{
+          "lpos":"csc_body_board_forum", 
+          "lid" :"csc_body_board_forum_pagination"
+        });
+    }
+    catch(err) {}
+        
+    //table heads link click on replies, helpfulvotes, views  ---2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] thead[class='lia-table-head'] th a",{
+          "lpos":"csc_body_board_forum", 
+          "lid" :"csc_body_board_forum_table_heads"
+        });
+    }
+    catch(err) {}
+        
+    //tags clicks ------2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-page lia-quilt-layout-two-column-16-8 lia-top-quilt']  div[class='TagList'] ul li a",{
+          "lpos":"csc_body_discussion_forum", 
+          "lid" :"csc_body_discussion_forum_tags"
+        });
+    }
+    catch(err) {}
+  ///////////////////////////////////////////////////////////////////////end of  bd forum page
+  
+  ///////////////////////////////////////////////////////////////////////////////////////bd_tkb page
+  
+    try {        
+        cdc.util.addMetricsRule(".TkbPage .cMessageAuthorAvatarColumn a[class*='UserAvatar']",{
+          "lpos":"csc_body_board_tkb", 
+          "lid" :"csc_body_board_tkb",
+        "linktext" : "user avatar"
+        });
+
+        cdc.util.addMetricsRule(".TkbPage .lia-quilt-row-main .lia-quilt-column-main-content .cThreadInfoColumn .MessageSubjectIcons a",{
+          "lpos":"csc_body_board_tkb", 
+          "lid" :"csc_body_board_tkb"
+        });
+    }
+    catch(err) {}
+
+    //clicks on th labels ---2018/07/22
+    try {        
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-tkb-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_board_tkb", 
+          "lid" :"csc_body_board_tkb_labels"
+        });
+    }
+    catch(err) {}
+
+    //pagination clicks ----2018/07/22
+    try {                
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-tkb-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='lia-paging-full-wrapper lia-paging-pager'] a",{
+          "lpos":"csc_body_board_tkb", 
+          "lid" :"csc_body_board_tkb_pagination"
+        });
+   
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-tkb-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div ul[class='lia-paging-full'] li a",{
+          "lpos":"csc_body_board_tkb", 
+          "lid" :"csc_body_board_tkb_pagination"
+        });
+    }
+    catch(err) {} 
+  /////////////////////////////////////////////////////////////////////end of  bd_tkb page
+  
+  ////////////////////////////////////////bd_blog page
+    try {                
+        cdc.util.addMetricsRule(".BlogPage .BoardManagementTaplet a",{
+          "lpos":"csc_right_nav_board_blogs", 
+          "lid" :"csc_right_nav_board_blogs_dash"
+        });
+    }
+    catch(err) {}
+  
+    //clicks on the labels .....   updated on 2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_labels"
+        });
+    }
+    catch(err) {}
+
+    //links inside the message subject in the board   ---2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='blog-articles lia-component-articles'] div[class='lia-message-subject lia-component-message-view-widget-subject'] h2[class='message-subject'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_title"
+        });
+    }
+    catch(err) {}
+        
+    //click on the profile of the author  ---2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-message lia-quilt-layout-blog-message'] div[class='lia-quilt-column-alley lia-quilt-column-alley-left'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_title_profile"
+        });
+    }
+    catch(err) {}
+      
+    //click on add tags in messages   ---2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='MessageTags lia-component-tags-with-title-link'] div[class='TagList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_tags"
+        });
+    }
+    catch(err) {}
+
+    //click on add tags  at teh bottom  ---2018/07/22          ---corrected
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-panel lia-panel-standard TagCloudTaplet Chrome lia-component-tags-widget-tag-cloud'] div[class='TagList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_tags_bottom"
+        });
+    }
+    catch(err) {}
+        
+    // click on links in the subject body                          ---2018/07/22          ---corrected
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page lia-quilt-layout-two-column-main-side lia-top-quilt']  div[class='blog-message-body'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_subject"
+        });
+    }
+    catch(err) {}
+
+    //click on the blogs events board page    ----2018/07/23
+    //clicks on the labels
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-events lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_labels"
+        });
+    }
+    catch(err) {}
+
+    //links on the message subject title in the board   ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-events lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-message-subject lia-component-message-view-widget-subject'] h2[class='message-subject'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_title"
+        });
+    }
+    catch(err) {}
+
+    //click on the profile of the author  ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-events lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-quilt-column lia-quilt-column-16 lia-quilt-column-left lia-quilt-column-header-left'] div[class='lia-quilt-column-alley lia-quilt-column-alley-left'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_title_profile"
+        });
+    }
+    catch(err) {}
+
+    //click on add tags in messages   ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-events lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='MessageTags lia-component-tags-with-title-link'] div[class='TagList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_tags"
+        });
+    }
+    catch(err) {}
+        
+    //click on add tags  at teh bottom  ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-events lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-panel lia-panel-standard TagCloudTaplet Chrome lia-component-tags-widget-tag-cloud'] div[class='TagList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_tags_bottom"
+        });
+    }
+    catch(err) {}
+
+    // click on links in the message body       ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-events lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='blog-message-body'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_subject"
+        });
+    }
+    catch(err) {}
+
+    //click on the blogs videos board page    ----2018/07/23
+    //clicks on the labels
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-videos lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_labels"
+        });
+    }
+    catch(err) {}
+
+    //links on the message subject title in the board   ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-videos lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-message-subject lia-component-message-view-widget-subject'] h2[class='message-subject'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_title"
+        });
+    }
+    catch(err) {}
+
+    //click on the profile of the author  ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-videos lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-quilt-column lia-quilt-column-16 lia-quilt-column-left lia-quilt-column-header-left'] div[class='lia-quilt-column-alley lia-quilt-column-alley-left'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_title_profile"
+        });
+    }
+    catch(err) {}
+
+    //click on add tags in messages   ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-videos lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='MessageTags lia-component-tags-with-title-link'] div[class='TagList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_tags"
+        });
+    }
+    catch(err) {}
+        
+    //click on add tags  at teh bottom  ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-videos lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='lia-panel lia-panel-standard TagCloudTaplet Chrome lia-component-tags-widget-tag-cloud'] div[class='TagList'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_tags_bottom"
+        });
+    }
+    catch(err) {}
+        
+    // click on links in the message body       ---2018/07/23
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-page-videos lia-quilt-layout-two-column-main-side lia-top-quilt'] div[class='blog-message-body'] a",{
+          "lpos":"csc_body_board_blogs", 
+          "lid" :"csc_body_board_blogs_subject"
+        });
+    }
+    catch(err) {}
+
+  /////////////////////////////////end of bd_blog page
+  
+  ////////////////////////////////////////////////////////////////////////////////discussion_forum page 
+  
+    //clicks on the 3 dots
+    try {
+        cdc.util.addMetricsRule(".ForumTopicPage .MessageView.lia-message-view-forum-message.lia-message-view-display a[title='Show option menu']",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_options",
+        "linktext" : "options"
+        });
+
+        cdc.util.addMetricsRule(".ForumTopicPage .MessageView .dropdown-positioning-static .lia-menu-dropdown-items a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_options_dd"
+        });
+    }
+    catch(err) {}
+        
+    //click on add tags 
+    try {
+        cdc.util.addMetricsRule(".ForumTopicPage .lia-quilt-row-main .lia-component-message-view-widget-tags a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_thread"
+        });
+    }
+    catch(err) {}
+
+    //clicks on mee too tags
+    try {
+        cdc.util.addMetricsRule(".ForumTopicPage .lia-quilt-row-main .RatingDisplay.lia-component-ratings-widget-rating-display a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_thread"
+        });
+    }
+    catch(err) {}
+
+    //clicks on reply and quick reply
+    try {
+        cdc.util.addMetricsRule(".ForumTopicPage .lia-quilt-row-main .lia-quilt-column-footer-right a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_thread"
+        });
+    }
+    catch(err) {}
+
+    //kudos
+    try {
+        cdc.util.addMetricsRule(".ForumTopicPage div[class='lia-button-image-kudos-give'] a[href*='/forums/']",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_kudos",
+        "linktext" : "kudos"
+        });
+    }
+    catch(err) {}
+
+    //label clicks -----2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-topic-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='LabelsForArticle lia-component-labels'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_labels"
+        });
+    }
+    catch(err) {}
+
+    //clicks on the user name in message header  ----2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='lia-quilt lia-quilt-forum-message lia-quilt-layout-one-column-message'] div[class='lia-quilt-row lia-quilt-row-header'] a[class='lia-link-navigation lia-page-link lia-user-name-link']",
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_body_discussion", 
+                    "lid" : "csc_profile_click",
+                    "linktext" : $.trim(jQuery(this).text()),
+                    "link" : jQuery(this).attr('href') 
+                }
+            };
+            trackEvent.event("link", obj); 
+        });	
+    }
+    catch(err) {}
+        
+    //clicks on the add tags    ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-message lia-quilt-layout-one-column-message'] div[id='taglist'] a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_tags"
+        });
+
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-forum-topic-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='TagList'] ul li a",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_tags"
+        }); 
+    }
+    catch(err) {}
+
+    //accept as a solution ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("a[id='markMessageAsAcceptedSolutionSecondaryButton']",{
+          "lpos":"csc_body_discussion", 
+          "lid" :"csc_body_discussion_acceptedsolution"
+        });
+    }
+    catch(err) {}
+
+  /////////////////////////////////////////////////////////end of discussion_forum page
+  /////////////////////////////////////////////////////////////////////////////////////////documents article_tkb page 
+  
+  
+    //click on link in verison history
+    try {
+        cdc.util.addMetricsRule(".TkbArticlePage .lia-quilt-column-right-content .lia-component-tkb-widget-article-revision-info-taplet .lia-revision-article-history-link-row a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_main"
+        });
+    }
+    catch(err) {}
+        
+    //clicks on the labels   -----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-tkb-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt lia-quilt-tkb-article-page-v2_4'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_main_labels"
+        });
+    }
+    catch(err) {}
+
+    //clicks on the add tags    ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-tkb-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt lia-quilt-tkb-article-page-v2_4'] div[class='TagList'] a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_main_tags"
+        });
+    }
+    catch(err) {}
+
+    //click on the links in the main body     ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-tkb-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt lia-quilt-tkb-article-page-v2_4'] div[class='lia-message-body-content'] a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_main"
+        });
+    }
+    catch(err) {}
+        
+    //click on 3 dots
+    try {
+        cdc.util.addMetricsRule(".TkbArticlePage .lia-message-view-display.lia-row-standard-read a[title='Show option menu']",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_options",
+        "linktext" : "options"
+        });
+
+        cdc.util.addMetricsRule(".TkbArticlePage .MessageView .dropdown-positioning-static .lia-menu-dropdown-items a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_options_dd"
+        });
+    }
+    catch(err) {}
+    
+    //click on share and comment
+    try {
+        cdc.util.addMetricsRule(".TkbArticlePage .lia-component-share-button .lia-button-wrapper-secondary a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_main"
+        });
+
+        cdc.util.addMetricsRule(".TkbArticlePage #at20mc .atm-i .atm-s a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_share_dd"
+        });
+
+        cdc.util.addMetricsRule(".TkbArticlePage div[class='lia-button-image-kudos-give'] a[href*='/tkb/']",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_kudos",
+        "linktext" : "kudos"
+        });
+
+
+        cdc.util.addMetricsRule(".TkbArticlePage .lia-button-image-kudos-count a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_kudos"
+        });
+    }
+    catch(err) {}
+
+    //comment section
+    try {
+        cdc.util.addMetricsRule(".TkbArticlePage div[class='lia-CommentEditor-form lia-component-comments'] a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_comment"
+        });
+
+        cdc.util.addMetricsRule(".TkbArticlePage div[class='lia-CommentEditor-form lia-component-comments'] .lia-form-footer span input",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_comment"
+        });
+    }
+    catch(err) {}
+
+    //top tags
+    try {
+        cdc.util.addMetricsRule(".TkbArticlePage div[class='lia-panel lia-panel-standard TagCloudTaplet Chrome lia-component-tags-widget-tag-cloud'] a",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_toptags"
+        });
+    }
+    catch(err) {}
+
+    //click on the comment button in the main section -----2018/07/19
+    try {
+        cdc.util.addMetricsRule(".TkbArticlePage div[class='lia-button-group lia-component-comment-button'] a[id='commentOnThis']",{
+          "lpos":"csc_body_article_tkb", 
+          "lid" :"csc_body_article_tkb_main"
+        });
+    }
+    catch(err) {}
+        
+    //////////////////////////////////////////////////////////////////////////////////////end of document article_tkb page
+
+    /////////////////////////////////////////////////////////////////////article_blog page  
+
+    //click on 3 dots
+    try {
+        cdc.util.addMetricsRule(".BlogArticlePage .lia-quilt-column-alley-right .lia-component-message-view-widget-action-menu a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_options",
+        "linktext" : "options"
+        });
+
+        cdc.util.addMetricsRule(".BlogArticlePage .lia-component-message-view-widget-action-menu .lia-menu-dropdown-items a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_options_dd"
+        });
+    }
+    catch(err) {}
+
+    //clicks on the add tags
+    try {
+        cdc.util.addMetricsRule(".BlogArticlePage .lia-quilt-row-main .lia-quilt-column-alley-single .lia-component-add-tags a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_thread"
+        });
+    }
+    catch(err) {}
+
+    //click on share and comment
+    try {
+        cdc.util.addMetricsRule(".BlogArticlePage .MessageView .lia-quilt-blog-topic-message .lia-quilt-column-footer-right a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_thread"
+        });
+
+        cdc.util.addMetricsRule(".BlogArticlePage #at20mc .atm-i .atm-s a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_thread_share_dd"
+        });
+
+        cdc.util.addMetricsRule(".BlogArticlePage div[class='lia-button-image-kudos-give'] a[href*='/blogs/']",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_kudos",
+        "linktext" : "kudos"
+        });
+
+        cdc.util.addMetricsRule(".BlogArticlePage .lia-button-image-kudos-count a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_kudos"
+        });
+    }
+    catch(err) {}
+
+    //comment section
+    try {
+        cdc.util.addMetricsRule(".BlogArticlePage .lia-form-fieldset-wrapper .MessageEditor .lia-form-body-entry a",{   
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_comment"
+        });
+
+        cdc.util.addMetricsRule(".BlogArticlePage #commenteditorform .lia-form-footer span input",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_comment"
+        });
+    }
+    catch(err) {}
+        
+    //pagination
+    try {
+        cdc.util.addMetricsRule(".BlogArticlePage .lia-quilt-column-alley-left .lia-paging-full-wrapper a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_thread_pagination"
+        });
+    }
+    catch(err) {}
+        
+    //label clicks on blogs  ------2018/07/19
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='LabelsForArticle lia-component-message-view-widget-labels'] div[class='LabelsList'] a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_labels"
+        });
+    }
+    catch(err) {}
+        
+    //clicks on video play button------2018/07/19
+    try {
+        jQuery("body").on("mousedown", "div[class='lia-quilt lia-quilt-blog-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='lia-vid-container video-embed-center'] button", function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos":"csc_body_article_blogs", 
+                    "lid" : "csc_videos",
+                    "linktext" : $(this).attr("aria-label")
+                }
+            };
+            trackEvent.event("link", obj); 
+        });
+    }
+    catch(err) {}
+
+    //clicks on the links inside the message body    ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[class='lia-message-body-content'] a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_main_message"
+        });
+    }
+    catch(err) {}
+        
+    //clicks on the add tags    ----2018/07/22
+    try {
+        cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-blog-article-page lia-quilt-layout-two-column-16-8 lia-top-quilt'] div[id='taglist'] a",{
+          "lpos":"csc_body_article_blogs", 
+          "lid" :"csc_body_article_blogs_main_tags"
+        });
+    }
+    catch(err) {}
+        
+    //////////////////////////////////////////////////// end of article_blogs page
+    //added these new tags on 20191113 for the profile pages clicks for community helping community campaign
+
+    //clicks on the tab buttons in the my settings profile page
+    try {
+        cdc.util.addMetricsRule("body[class='lia-user-status-registered MyProfilePage lia-body'] div[id = 'tabGroup'] ul li span a", {				 								
+            "lpos"                 : "csc_profilepage",
+            "lid"                 : "csc_profilepage_settings"				
+        });
+    }
+    catch(err) {}
+        
+    //clicks on the avatar icon in the current avatar in my settings profile avatar page
+    try {
+        cdc.util.addMetricsRule("body[class='lia-user-status-registered MyProfilePage lia-body'] div[id = 'tabGroup'] div[class='UserIcons'] div[id='tabgroup'] form div fieldset div[class='UserAvatar lia-user-avatar lia-component-common-widget-user-avatar'] a[class='UserAvatar lia-link-navigation']", {				 								
+            "lpos"                 : "csc_profilepage",
+            "lid"                 : "csc_avatarpage_from_community_current_avatar"				
+        });
+        
+        cdc.util.addMetricsRule("body[class='lia-user-status-registered MyProfilePage lia-body'] div[id = 'tabGroup'] div[class='UserIcons'] div[id='tabgroup'] form div fieldset div a[class*='lia-link-navigation lia-panel-dialog-trigger lia-panel-dialog-trigger-event-click']", {				 								
+            "lpos"                 : "csc_profilepage",
+            "lid"                 : "csc_avatarpage_from_community_current_avatar"				
+        });
+        cdc.util.addMetricsRule("body[class='lia-user-status-registered MyProfilePage lia-body'] div[id = 'tabGroup'] div[class='UserIcons'] div[id='tabgroup'] form div fieldset div[id='lia-avatarCollectionDisplay'] ul li a", {				 								
+            "lpos"                 : "csc_profilepage",
+            "lid"                 : "csc_avatarpage_from_community_choose_an_avatar"				
+        });
+    }
+    catch(err) {}
+
+    //clicks on the view profile page hero avatar and manage profile link
+    try {
+        cdc.util.addMetricsRule("body[class='lia-user-status-registered ViewProfilePage lia-body'] div[class='lia-profile-hero-user'] div[class='lia-profile-hero-avatar-wrapper lia-component-user-avatar-hero'] div a", {				 								
+            "lpos"                 : "csc_view_profilepage",
+            "lid"                 : "csc_view_profilepage_hero_avatar"				
+        });		
+        cdc.util.addMetricsRule("body[class='lia-user-status-registered ViewProfilePage lia-body'] div[class='lia-quilt-column lia-quilt-column-09 lia-quilt-column-inner lia-quilt-column-profile-hero-center'] div div div[class='manage-profile-link-container'] a[class='manage-profile-link']", {				 								
+            "lpos"                 : "csc_view_profilepage",
+            "lid"                 : "csc_view_profilepage_manage_profile"				
+        });
+    }
+    catch(err) {}
+});
+
+//click on the save and reset button in personal >> personal information tab
+try {
+    if(window.location.href.indexOf("/t5/user/myprofilepage/tab/personal-profile:personal-info") != -1){
+        window.grpcat_1 =  document.getElementById("profilesignature").value;
+        window.grpcat_2 =  document.getElementById("profilebiography").value;
+        window.grpcat_3 =  document.getElementById("profiletitle").value;
+        window.grpcat_4 =  document.getElementById("profileoccupation").value;
+        window.grpcat_5 =  document.getElementById("profileurl_homepage").value;
+
+        jQuery(document).on("mousedown","div[id='tabGroup'] div[class='PersonalProfile'] div[id = 'tabgroup'] form div[class='lia-form-footer'] div div div div[class='lia-form-submit lia-button-group'] span input[type='submit']", 
+        function() {
+            var obj = {
+                ntpagetag : {
+                    "lpos" : "csc_profilepage",
+                    "lid" :  "csc_personal_information_settings",
+                    "linktext" : jQuery(this).val(),
+                    "grpcat1" : jQuery("div[id='tabGroup']").children("div[class='PersonalProfile']").children("div[id = 'tabgroup']").children("ul").children("li[class*='lia-tabs-active']").children("span").children("a").text(),
+                    "grpcat2" : jQuery("div[id='tabGroup']").children("ul[role='tablist']").children("li[class*='lia-tabs-active']").children("span").children("a").text(),
+                    "grpcat_sig" : document.getElementById("profilesignature").value,
+                    "grpcat_sig_prev" :grpcat_1,
+                    "grpcat_bio" : document.getElementById("profilebiography").value,
+                    "grpcat_bio_prev" :grpcat_2,
+                    "grpcat_title" : document.getElementById("profiletitle").value,
+                    "grpcat_title_prev" :grpcat_3,
+                    "grpcat_occupation" : document.getElementById("profileoccupation").value,
+                    "grpcat_occupation_prev" :grpcat_4,
+                    "grpcat_hp_url" : document.getElementById("profileurl_homepage").value,
+                    "grpcat_hp_url_prev" :grpcat_5
+                }
+            }; 
+            trackEvent.event("link", obj); 
+        }); 
+    }
+}
+catch(err) {}
+
+//click on the save and reset button in personal >> social accounts tab
+try {
+    if(window.location.href.indexOf("/t5/user/myprofilepage/tab/personal-profile:im-handles") != -1){
+        window.grpcat_tw =  document.getElementById("profiletwitter_id").value;
+        window.grpcat_lk =  document.getElementById("profilelinkedin_id").value;
+        window.grpcat_fb =  document.getElementById("profilefacebook_id").value;
+        window.grpcat_in =  document.getElementById("profileinstagram_id").value;
+        window.grpcat_yt =  document.getElementById("profileyoutube_id").value;
+
+        jQuery(document).on("mousedown","div[id='tabGroup'] div[class='PersonalProfile'] div[id = 'tabgroup'] form div[class='lia-form-footer'] div div div div[class='lia-form-submit lia-button-group'] span input[type='submit']", function() {
+            var obj = {
+                ntpagetag : {
+                "lpos" : "csc_profilepage",
+                "lid" :  "csc_social_accounts_settings",
+                "linktext" : jQuery(this).val(),
+                "grpcat1" :  jQuery("div[id='tabGroup']").children("div[class='PersonalProfile']").children("div[id = 'tabgroup']").children("ul").children("li[class*='lia-tabs-active']").children("span").children("a").text(),
+                "grpcat2" :  jQuery("div[id='tabGroup']").children("ul[role='tablist']").children("li[class*='lia-tabs-active']").children("span").children("a").text(),
+                "grpcat_twt" : document.getElementById("profiletwitter_id").value,
+                "grpcat_twt_prev" :grpcat_tw,
+                "grpcat_lnk" : document.getElementById("profilelinkedin_id").value,
+                "grpcat_lnk_prev" :grpcat_lk,
+                "grpcat_fcb" : document.getElementById("profilefacebook_id").value,
+                "grpcat_fcb_prev" :grpcat_fb,  
+                "grpcat_ins" : document.getElementById("profileinstagram_id").value,
+                "grpcat_ins_prev" :grpcat_in,
+                "grpcat_yut" : document.getElementById("profileyoutube_id").value,
+                "grpcat_yut_prev" :grpcat_yt    
+                }
+            };
+            trackEvent.event("link", obj);
+        });
+    }
+}
+catch(err) {}
+
+/*
+*https://community.cisco.com/t5/walled-garden/ct-p/walled-garden
+* metrics code for walled garden ab testing 
+* date: 2020/12/14
+* $Revision:2
+*/
+
+//clicks on the categories in hero
+try {
+    cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-custom-hero lia-quilt-layout-community-hero lia-component-quilt-custom-hero'] div[class='lia-quilt-row lia-quilt-row-hero-user'] div div ul li ul li a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"home links"
+    });
+}
+catch(err) {}
+
+//clicks on browse all topics in hero
+try {
+    cdc.util.addMetricsRule("div[class='lia-quilt lia-quilt-custom-hero lia-quilt-layout-community-hero lia-component-quilt-custom-hero'] div[class='lia-quilt-row lia-quilt-row-hero-user'] div[class='custom_view_all_topics'] a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"home links"
+    });
+}
+catch(err) {}
+
+//clicks on welcome to community link
+try {
+    cdc.util.addMetricsRule("#custom-welcome-homepage a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"welcome to community"
+    });
+}
+catch(err) {}
+
+//clicks on explore the community links latest and trending filters
+try {
+    cdc.util.addMetricsRule("div[class='trending-topics-list'] div[class='filters-tabs'] button",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"explore the community"
+    });
+}
+catch(err) {}
+    
+//clicks on explore the community links
+try {
+    cdc.util.addMetricsRule("div[class='trending-topics-list'] div[class='trending-topics-content'] a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"explore the community"
+    });
+}
+catch(err) {}
+    
+//clicks on the community news links
+try {
+    cdc.util.addMetricsRule("div[class='top-experts'] div[class='top-events'] div[class='custom-upcoming-events'] a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"upcoming events"
+    });
+}
+catch(err) {}
+
+//clicks on the resources links
+try {
+    cdc.util.addMetricsRule("div[class='trending-topics-list'] div[class='top-solutions'] div[class='custom-resources-available'] a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"resources"
+    });
+}
+catch(err) {}
+
+//clicks on the featured project links
+try {
+    cdc.util.addMetricsRule("div[class='featured-project'] div[class='project-story-item'] div[class='project-story-description'] a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"featured project"
+    });
+}
+catch(err) {}
+
+//clicks on the filter radio buttons
+try {
+    cdc.util.addMetricsRule("div[class='community-news-container homepage-component'] div[class='community-news-list'] a",{
+      "lpos":"csc_walled_garden", 
+      "lid" :"community news"
+    });
+}
+catch(err) {}
+
+//filter clicks --clicks on the radio buttons
+//category-filter
+try {
+    jQuery(document).on("change","div[class='trending-topics'] div ul[class='filters-list'] li[class='category-filter-span'] label input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_walled_garden2", 
+                "lid" :"filter list",
+                "linktext" : jQuery(this).parent('label').text().trim(),
+                "grpcat1" :  "technology",
+                "grpcat2" : jQuery(this).parent('label').parent('li').parent('ul').prev('label').text().trim()
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//user-group-filter
+try {
+    jQuery(document).on("change","div[class='trending-topics'] div ul[class='filters-list'] li[class='user-group-filter-span'] label input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_walled_garden", 
+                "lid" :"filter list",
+                "linktext" : jQuery(this).parent('label').text().trim(),
+                "grpcat1" :  "interest groups"
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+    
+//discussion-filter
+try {
+    jQuery(document).on("change","div[class='trending-topics'] div ul[class='filters-list'] li[class='discussion-filter-span'] label input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_walled_garden", 
+                "lid" :"filter list",
+                "linktext" : jQuery(this).parent('label').text().trim(),
+                "grpcat1" :  "discussion status"
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+    
+    //end of walled garden metrics rules 
+// End of the file  
+
+
+///////community re-imagine 
+/////there are 2 parts we are adding one for success guides in docs and second for atx in events 
+/*
+* metrics code for success guides aka guided journey pages and atx events pages
+* date: 2022/08/30
+* $Revision:1
+*/
+
+
+////success guides aka guided journey pages in documents section --start
+//////login link on the spotlight	
+try {
+ jQuery("body").on("mousedown","div[class='SG-alert-box'] span", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_gj_spotlight_login", 
+                "lid" :"spotlight_login",
+                "linktext" : jQuery(this).text(),
+				"grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}	
+
+/////clicks on the dropdown selection of the options button and one level lower clicks-- also present in the atx events page
+try {
+ jQuery(document).on("mousedown","div[class='lia-quilt-row lia-quilt-row-header-bottom'] div[class='lia-menu-navigation'] div[class='dropdown-default-item'] a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $('.lia-page-header').children('h1').text(), 
+      "lid" : "csc_options_menu",  
+	  "linktext" : $(this).text(),
+	  "grpcat_1" : $('#custom-SG-version').children('div').children('p:nth-child(2)').text(),
+      "grpcat_3" : "csc_gj_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+try {
+ jQuery(document).on("mousedown","div[class='lia-quilt-row lia-quilt-row-header-bottom'] div[class='lia-menu-navigation'] div[class='dropdown-default-item'] div ul li a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $('.lia-page-header').children('h1').text(),
+      "lid" : "csc_options_menu", 
+	  "linktext" : $(this).text(),
+	  "grpcat_1" : $('#custom-SG-version').children('div').children('p:nth-child(2)').text(),
+      "grpcat_3" : "csc_gj_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////click on the refresh guide
+try {
+ jQuery(document).on("mousedown","div[class='sga-refresh-wrap'] button", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_gj_guide_page_header", 
+                "lid" : $(this).parent('div').parent('div').parent('div').parent('div').siblings('div').children('div').children('div').children('div').children('h1').text(),
+                "linktext" : $(this).text(),
+				"grpcat_1" : $('.lia-page-header').children('h1').children('span').text(),
+				"grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////click on the learn more button 
+try {
+ jQuery(document).on("mousedown","div[id='custom-SG-version'] div[class='custom-SG-version-val'] p a", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_gj_guide_page_header", 
+                "lid" : $(this).parent('p').parent('div').parent('div').prev('div').children('p').text(),
+                "linktext" : $(this).text(),
+				"grpcat_1" : $('.lia-page-header').children('h1').children('span').text(),
+				"grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}	
+
+/////click on the kudos in message post
+try {
+ jQuery(document).on("mousedown","div[id='SG-author'] div div div a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos":$('.lia-page-header').children('h1').children('span').text(), 
+      "lid" : $('#custom-SG-topics').children('h2').text(),
+	  "linktext" : "csc_gj_kudos",
+	  "grpcat_3" : "csc_gj_page"
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the view comments button in message post
+try {
+ jQuery(document).on("mousedown","div[id='SG-author'] div[class='SG-comments-btn'] button[id = 'scroll_btn']", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos":$('.lia-page-header').children('h1').children('span').text(), 
+      "lid" : $('#custom-SG-topics').children('h2').text(),
+	  "linktext" : $(this).text(),
+	  "grpcat_3" : "csc_gj_page"
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the toggle dropdown in message post --with if else logic
+try {
+ jQuery(document).on("mousedown","div[id='SG-author'] div[id='custom-sg-step-by-step-toggle']", function () {
+  	var lt = $(this).text();
+	var chk = $(this).children('span').attr('class');
+	if (chk == "custom-sg-summary-icon-toggle-topic icon-chevron-down") {
+		lt = lt + "_opened";	
+	}else if (chk == "custom-sg-summary-icon-toggle-topic icon-chevron-up") {
+		lt= lt + "_closed";
+	}
+        var obj = {
+            ntpagetag : {
+      "lpos":$('.lia-page-header').children('h1').children('span').text(), 
+      "lid" : $('#custom-SG-topics').children('h2').text(),
+	  "linktext" : lt,
+	  "grpcat_3" : "csc_gj_page_tester"
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+
+////clicks on the anchor links in the dropdown under lifecycle adoption 
+try {
+ jQuery(document).on("mousedown","div[id='SG-author'] div[class='custom-sg-lifecycle'] div[class='custom-sg-step-by-stepcycle'] div p", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos":$('.lia-page-header').children('h1').children('span').text(), 
+      "lid" : $('#custom-SG-topics').children('h2').text(),
+	  "linktext" : $(this).parent('div').attr('class'),
+	  "grpcat_3" : "csc_gj_page"
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+	  
+////click on the 3 dots .and clickc on drop down menu in the step container	
+try {
+ jQuery(document).on("mousedown","div[class*='SG-sub_step-action form-group dropdown'] div span", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos":$(this).parent('div').parent('div').parent('div').attr('data-element-id'), 
+      "lid" : $(this).parent('div').parent('div').parent('div').children('div:nth-child(1)').children('div:nth-child(2)').children('p').text(),
+	  "linktext" : "action",
+	  "grpcat_1" : $(this).parent('div').parent('div').attr('class'),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+try {
+ jQuery(document).on("mousedown","div[class*='SG-sub_step-action form-group dropdown'] div[class='dropdown__menu'] a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos":$(this).parent('div').parent('div').parent('div').attr('data-element-id'), 
+      "lid" : $(this).parent('div').parent('div').parent('div').children('div:nth-child(1)').children('div:nth-child(2)').children('p').text(),
+	  "linktext" : $(this).text(),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////click on the view/close tasks toggle button on step container
+try {
+ jQuery(document).on("mousedown","div[class='SG-sub-step-task-toggle panel panel--bordered-top'] span", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos":$(this).parent('div').parent('div').attr('data-element-id'), 
+      "lid" : $(this).parent('div').parent('div').children('div:nth-child(1)').children('div:nth-child(2)').children('p').text(),
+	  "linktext" : $(this).parent('div').text(),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+
+////click on the view/close tasks toggle button on task container
+try {
+ jQuery(document).on("mousedown","div blockquote p[class*='SG-task-summary-dropdown'] span", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $(this).parent('p').parent('blockquote').attr('data-element-id'), 
+      "lid" : $(this).parent('p').parent('blockquote').children('div:nth-child(1)').children('div').children('p:nth-child(2)').text(),
+	  "linktext" :  $(this).parent('p').text(),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//// click on the view document button on the task container
+try {
+ jQuery(document).on("mousedown","div blockquote div p a[title='View Document Button']", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $(this).parent('p').parent('div').parent('blockquote').attr('data-element-id'), 
+      "lid" : $(this).parent('p').parent('div').parent('blockquote').children('div:nth-child(1)').children('div').children('p:nth-child(2)').text(),
+	  "linktext" : $(this).text(),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//////clicks on the status dropdown under the task container
+try {
+ jQuery(document).on("mousedown","div blockquote div div[class='SG-task-status-dropdown'] div div input", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $(this).parent('div').parent('div').parent('div').parent('div').parent('blockquote').attr('data-element-id'), 
+      "lid" : $(this).parent('div').parent('div').parent('div').parent('div').parent('blockquote').children('div:nth-child(1)').children('div').children('p:nth-child(2)').text(),
+	  "linktext" : $(this).attr('value'),
+	  "grpcat_1" : $(this).parent('div').parent('div').attr('class'),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+try {
+ jQuery(document).on("mousedown","div blockquote div div[class='SG-task-status-dropdown'] div div a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $(this).parent('div').parent('div').parent('div').parent('div').parent('blockquote').attr('data-element-id'), 
+      "lid" : $(this).parent('div').parent('div').parent('div').parent('div').parent('blockquote').children('div:nth-child(1)').children('div').children('p:nth-child(2)').text(),
+	  "linktext" : $(this).text(),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//////clicks on the upgrade button in the upgrade container
+try {
+ jQuery(document).on("mousedown","div[class='custom-SG-upgrade'] div p a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $('.custom-SG-upgrade').children('div:nth-child(1)').text(), 
+      "lid" : $('.custom-SG-upgrade').children('div:nth-child(2)').children('p:nth-child(1)').text(), 
+	  "linktext" : $(this).text(),
+      "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////clicks on the dropdown selectoin of the replies
+try {
+ jQuery(document).on("mousedown","div[class='CommentList'] div[class='lia-menu-navigation'] div[class='dropdown-default-item'] div div ul[class='lia-menu-dropdown-items'] li a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $('.lia-page-header').children('h1').text(), 
+      "lid" : $('.lia-panel-heading-bar').children('span').text().trim(), 
+	  "linktext" : $(this).text(),
+	  "grpcat_1" : $('#custom-SG-version').children('div').children('p:nth-child(2)').text(),
+      "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the right rail 
+try {
+ jQuery(document).on("mousedown","div[class='lia-quilt-column lia-quilt-column-06 lia-quilt-column-right lia-quilt-column-side-content'] div a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": "csc_gj_right_rail", 
+      "lid" : $('.container-quick-links').children('h3').text().trim(), 
+	  "linktext" : $(this).text(),
+      "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the comment editor post section 
+////preview button
+try {
+ jQuery(document).on("mousedown","div[id='commenteditorform'] form div[class='MessageEditor'] a", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": "csc_gj_comment_editor", 
+      "lid" : "csc_gj_comment_editor_header", 
+	  "linktext" : $(this).text(),
+      "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////clicks on the footer in edit box
+try {
+ jQuery(document).on("mousedown","div[id='commenteditorform'] form div[class='lia-form-footer'] div div div span", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": "csc_gj_comment_editor", 
+      "lid" : "csc_gj_comment_editor_footer", 
+	  "linktext" : $(this).children('input:nth-child(2)').attr('value'),
+      "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the view/hide hidden tasks
+try {
+ jQuery(document).on("mousedown","div[class = 'SG-steps-container'] div[class = 'hidden-tasks-notice'] span[class = 'hidden-tasks-toggle']", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $(this).parent('div').parent('div').prev('div').attr('data-element-id'), 
+      "lid" : $(this).parent('div').parent('div').prev('div').children('div:nth-child(1)').children('div:nth-child(2)').text(),
+	  "linktext" :  $(this).text(),
+	  "grpcat_3" : "csc_gj_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+
+/////click on the unhide hidden tasks
+try {
+ jQuery(document).on("mousedown","div[class = 'SG-steps-container'] div[class = 'hidden-tasks-list'] span[class = 'single-unhide-toggle']", function () {
+        var obj = {
+            ntpagetag : {
+      "lpos": $(this).attr('data-step-task-relation'), 
+      "lid" : $(this).attr('data-task-title'),
+	  "linktext" :  $(this).text(),
+	  "grpcat_3" : "csc_gj_page",
+	  "grpcat_4": $(this).parent('div').parent('div').parent('div').prev('div').attr('data-element-id'),
+	  "grpcat_5": $(this).parent('div').parent('div').parent('div').prev('div').children('div:nth-child(1)').children('div:nth-child(2)').text()
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////success guides aka guided journey pages in documents section --end
+
+
+///////atx events ---start
+////click on the filter dropdown -- technology --first level
+try {
+ jQuery(document).on("mousedown","div[id='atx-filter-box-technology'] div[id='atx-dropdown-box']", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).parent('div').attr('id'),
+                "linktext" : $(this).text(),
+				"grpcat_2" : $(this).parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}		
+
+////click on the filter dropdown -- technology --second level
+try {
+ jQuery(document).on("change","div[id='atx-filter-box-technology'] div[id='atx-dropdown-options-body'] ul li label[class='category-atx-label-filter'] input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).attr('name'),
+                "linktext" : $(this).attr('value'),
+				"grpcat_2" : $(this).parent('label').parent('li').parent('ul').parent('div').parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}		
+
+////click on the filter dropdown -- technology --third level
+try {
+ jQuery(document).on("change","div[id='atx-filter-box-technology'] div[id='atx-dropdown-options-body'] ul li ul[class='atx-subcatgory-label-filters-list child-boxes'] li label input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).parent('label').attr('class'),
+                "linktext" : $(this).attr('value'),
+				"grpcat_1" : $(this).parent('label').parent('li').parent('ul').prev('label').children('input').attr('value'),
+				"grpcat_2" : $(this).parent('label').parent('li').parent('ul').parent('li').parent('ul').parent('div').parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}		
+
+////click on the filter dropdown -- technology --third level
+try {
+ jQuery(document).on("mousedown","div[id='atx-filter-box-technology'] div[id='atx-dropdown-options-body'] div[class='atx-btns'] button", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).parent('div').parent('div').parent('div').attr('id'),
+                "linktext" : $(this).text(),
+				"grpcat_2" : $(this).parent('div').parent('div').parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}	
+
+/////click on the filter dropdown -- events --first level
+try {
+ jQuery(document).on("mousedown","div[id='atx-filter-box-event'] div[id='atx-dropdown-box-event']", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).parent('div').attr('id'),
+                "linktext" : $(this).text(),
+				"grpcat_2" : $(this).parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////click on the filter dropdown -- events --second level
+try {
+ jQuery(document).on("change","div[id='atx-filter-box-event'] div[id='atx-dropdown-options-body-event'] ul li ul li label[class='atx-subcategory-label-filter-name'] input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).attr('name'),
+                "linktext" : $(this).attr('value'),
+				"grpcat_2" : $(this).parent('label').parent('li').parent('ul').parent('li').parent('ul').parent('div').parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////click on the filter dropdown -- events --third level
+try {
+ jQuery(document).on("mousedown","div[id='atx-filter-box-event'] div[id='atx-dropdown-options-body-event'] div[class='atx-btns'] button", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).parent('div').parent('div').parent('div').attr('id'),
+                "linktext" : $(this).text(),
+				"grpcat_2" : $(this).parent('div').parent('div').parent('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the filter dropdown -- event status -- first level 
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-search-filters'] div[class='lia-occasion-filters'] div div[id='custom-status-filter']", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).attr('id'),
+                "linktext" : $(this).text(),
+				"grpcat_2" : $(this).attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////click on the filter dropdown -- event status --second level
+try {
+ jQuery(document).on("change","div[class='lia-occasion-search-filters'] div[class='lia-occasion-filters'] div div[id = 'custom-status-options'] div ul li div div label[class='search-toggle-element'] input", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : $(this).attr('id'),
+                "linktext" : $(this).attr('value'),
+				"grpcat_2" : $(this).parent('label').parent('div').parent('div').parent('li').parent('ul').parent('div').parent('div').prev('div').attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+////clicks on the filter breadcrumb
+try {
+ jQuery(document).on("mousedown","div[class='filter-bread-crumb'] div div div div ul li", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page_filter", 
+                "lid" : "csc_atx_filter_clear",
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_filter_clear",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the create event button
+try {
+ jQuery(document).on("mousedown","div[class='lia-page-header'] span a[id='createNewOccasion']", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page", 
+                "lid" : $(this).parent('span').prev('h1').children('span').text(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the list view/calendar view
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasions-filters lia-component-view-toggle'] div div span a", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":"csc_atx_bd_page", 
+                "lid" : $('.lia-occasion-view-label').text(),
+                "linktext" : $(this).attr('id'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the bread crumb in the event box
+try {
+ jQuery(document).on("mousedown","div[class='custom-lia-occasions-list'] div[class='lia-quilt-row lia-quilt-row-header'] div[class='lia-occasion-item-header'] div[class='custom-occasion-breadcrumbs'] a", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":$(this).parent('div').siblings('div').children('a').text().trim(), 
+                "lid" : "csc_atx_events_listview_breadcrumb",
+                "linktext" : $(this).text(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the title in the event box
+try {
+ jQuery(document).on("mousedown","div[class='custom-lia-occasions-list'] div[class='lia-quilt-row lia-quilt-row-header'] div[class='lia-occasion-item-header'] div[class='lia-occasion-title lia-component-title'] a", function () {
+        var obj = {
+            ntpagetag : {
+                "lpos":$(this).text().trim(), 
+                "lid" : "csc_atx_events_listview_title",
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the labels in the event box  
+try {
+ jQuery(document).on("mousedown","div[class='OccasionFiltersBreadCrumbPanel-ATX'] div[class='LabelsForArticle'] div ul li[class='label'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('li').parent('ul').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div').children('div').children('a').text().trim(),
+                "lid" : "csc_atx_events_listview_labels",
+                "linktext" : $(this).text(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the view details button
+try {
+ jQuery(document).on("mousedown","div[class='custom-occasions-view-details'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div').children('div').children('a').text().trim(),
+                "lid" : "csc_atx_events_listview_view_details",
+                "linktext" : $(this).text(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the event in calendar view
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasions-calender']  table tbody tr td div div div div table tbody tr td a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_calendarview",
+                "lid" : $(this).parent('td').parent('tr').parent('tbody').prev('thead').children('tr').children('td').attr('data-date'),
+                "linktext" : $(this).text(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the event in calendar view iframe title
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-item-content'] div[class='lia-occasion-title lia-component-title'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_calendarview",
+                "lid" :"csc_atx_events_calendarview_iframe_title",
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the event in calendar view iframe body
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-item-content'] div[class='lia-occasion-description lia-component-description'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_calendarview",
+                "lid" :"csc_atx_events_calendarview_iframe_body",
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/////click on the csc atx events page message view box, on the sort options and message edit box
+
+////not logged-in state 
+//////message view box --register using cisco login button
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[class='lia-quilt-row lia-quilt-row-main'] div[class='atx-detail'] div[class='atx-detail-error'] button", function () {
+   	var lt1 = $(this).parent('div').prev('select').children('option:selected').attr('start_time');
+   	var lt2 = $(this).parent('div').prev('select').children('option:selected').attr('end_time');	
+	var lt3 = $(this).parent('div').prev('select').children('option:selected').attr('timezone');
+	var lt4 = lt1 + "--" + lt2 + "--" + lt3;	
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div:nth-child(2)').children('h1').children('a').text().trim(),
+                "lid" :lt4,
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+
+////logged-in state
+//////message view box --register button
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[class='lia-quilt-row lia-quilt-row-main'] div[class='atx-detail'] a[class='lia-button lia-button-primary atx-detail-register-now']", function () {
+   	var ltr1 = $(this).prev('select').children('option:selected').attr('start_time');
+   	var ltr2 = $(this).prev('select').children('option:selected').attr('end_time');	
+	var ltr3 = $(this).prev('select').children('option:selected').attr('timezone');
+	var ltr = ltr1 + "--" + ltr2 + "--" + ltr3;	
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div:nth-child(2)').children('h1').children('a').text().trim(),
+                "lid" : ltr,
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+/*
+////logged-in state
+//////message view box --add to calendar button
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[class='lia-quilt-row lia-quilt-row-main'] div[class='lia-quilt-column-alley lia-quilt-column-alley-right'] a[class='lia-link-navigation lia-component-download-events']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div:nth-child(2)').children('h1').children('a').text().trim(),
+                "lid" :$(this).parent('div').parent('div').prev('div').children('div').children('div[class="registereddate"]').text().trim(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_add_to_calendar",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+*/
+
+////logged-in state
+//////message view box --add to calendar link next to registered date 
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[class='registereddate'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div:nth-child(2)').children('h1').children('a').text().trim(),
+                "lid" :$(this).parent('div').text().replace('Add To Calendar', ''),
+                "linktext" : $(this).text(),
+				"grpcat_2" : "csc_atx_events_message_view_add_to_calendar",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//////message view box --labels
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[class='lia-panel lia-panel-standard LabelsForMessage Chrome lia-component-message-view-widget-labels'] div[id='labelsForMessage'] div ul li[class='label'] h3 a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('h3').parent('li').parent('ul').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').parent('div').prev('div').children('div').children('div').children('div:nth-child(2)').children('h1').children('a').text().trim(),
+                "lid" :"csc_atx_events_message_view_labels",
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : $(this).prev('select').text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+
+//////message view box --kudos
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[class='lia-button-image-kudos-give'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_page",
+                "lid" :"csc_atx_events_message_view",
+                "linktext" : "csc_atx_events_page_kudos",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//////message view box --comments
+try {
+ jQuery(document).on("mousedown","div[class='lia-occasion-message-view'] div[id='inlineMessageReplyContainer'] div[id='messageActions'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_page",
+                "lid" :"csc_atx_events_message_view",
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//////message sort area
+try {
+ jQuery(document).on("mousedown","div[class='lia-discussion-view-style-menus'] a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_page",
+                "lid" :"csc_atx_events_message_sort",
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+//////message edit box 
+try {
+ jQuery(document).on("mousedown","div[class='lia-inline-message-reply-wrapper'] div[class='lia-js-block-events InlineMessageEditorForm'] form a", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_page",
+                "lid" :"csc_atx_events_message_edit",
+                "linktext" : $(this).text().trim(),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+try {
+ jQuery(document).on("mousedown","div[class='lia-inline-message-reply-wrapper'] div[class='lia-js-block-events InlineMessageEditorForm'] form input", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":"csc_atx_events_page",
+                "lid" :"csc_atx_events_message_edit",
+                "linktext" : $(this).attr('value'),
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+
+///// in the pop up after clicking the register button in messages
+///click on the register now button in the pop up 
+try {
+ jQuery(document).on("mousedown","div[class='modal__content'] div[class='modal__body'] div[class='atx-form-container'] div[class='inner-form-container'] form div div button[class='atx-registered-event']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('form').parent('div').parent('div').children('h1').text().trim(),
+                "lid" :$(this).parent('div').parent('div').parent('form').parent('div').parent('div').children('h2').text().trim(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register_pop_up",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+///click on the close on the top right corner in the pop up 
+try {
+ jQuery(document).on("mousedown","div[class='modal__content'] a[class='modal__close']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).siblings('div').children('div').children('h1').text().trim(),
+                "lid" :$(this).siblings('div').children('div').children('h2').text().trim(),
+                "linktext" : "csc_atx_events_message_view_register_pop_up_close",
+				"grpcat_2" : "csc_atx_events_message_view_register_pop_up",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+///click on the submit now button in the pop up 
+try {
+ jQuery(document).on("mousedown","div[class='modal__content'] div[class='modal__body'] div[class='atx-form-container'] div[class='inner-form-container'] form div div button[class='atx-thank-you-event']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('form').parent('div').parent('div').children('h1').text().trim(),
+                "lid" :$(this).parent('div').parent('div').parent('form').parent('div').parent('div').children('h2').text().trim(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register_pop_up",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+///click on the not-now button in the pop up 
+try {
+ jQuery(document).on("mousedown","div[class='modal__content'] div[class='modal__body'] div[class='atx-form-container'] div[class='inner-form-container'] form div div a[class='btn-not-now']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('form').parent('div').parent('div').children('h1').text().trim(),
+                "lid" :$(this).parent('div').parent('div').parent('form').parent('div').parent('div').children('h2').text().trim(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register_pop_up",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+///click on the close button in the pop up 
+try {
+ jQuery(document).on("mousedown","div[class='modal__content'] div[class='modal__body'] div[class='atx-form-container'] div[class='inner-form-container'] div a[class='btn-close']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').children('h1').text().trim(),
+                "lid" :$(this).parent('div').parent('div').parent('div').parent('div').children('h2').text().trim(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register_pop_up",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+///click on the add to calendar button in the pop up 
+try {
+ jQuery(document).on("mousedown","div[class='modal__content'] div[class='modal__body'] div[class='atx-form-container'] div[class='inner-form-container'] div button[class='dropbtn']", function () {
+        var obj = {
+            ntpagetag : {
+			    "lpos":$(this).parent('div').parent('div').parent('div').parent('div').children('h1').text().trim(),
+                "lid" :$(this).parent('div').parent('div').parent('div').parent('div').children('h2').text().trim(),
+                "linktext" : $(this).text().trim(),
+				"grpcat_2" : "csc_atx_events_message_view_register_pop_up",
+				"grpcat_3" : "csc_atx_page"
+
+            }
+        }; 
+        trackEvent.event("link", obj); 
+    });
+}
+catch(err) {}
+
+///////atx events ---end
+
+
+///////community re-imagine 
+/*
+* metrics code for header navigation clicks on all community pages
+* date: 2023/02/14
+* $Revision:2
+*/
+//clicks on the first level header navigation--cisco logo
+try {
+  jQuery(document).on("mousedown","div[class='fw-c-header__masthead'] a[class='fw-c-header__logo'] svg", 
+    function() {
+    var obj = {
+          ntpagetag : {
+    "lpos":"csc_header_first_panel", 
+    "lid" :$.trim(jQuery(this).text()),
+	"linktext" : $.trim(jQuery(this).text())
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+}
+catch(err) {}  
+
+//clicks on the first level header navigation
+try {
+  jQuery(document).on("mousedown","div[class='fw-c-header__masthead'] div[class='fw-c-header__nav'] h3 button", 
+    function() {
+    var obj = {
+          ntpagetag : {
+    "lpos":"csc_header_first_panel", 
+    "lid" :$.trim(jQuery(this).text()),
+	"linktext" : $.trim(jQuery(this).text())
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+}
+catch(err) {}
+
+//clicks on the second level header navigation
+try {
+  jQuery(document).on("mousedown","div[class='fw-c-header__masthead'] div[class='fw-c-header__nav'] div[class='fw-c-header__dropdown-content'] div[class*='tier2-container'] ul li a", 
+    function() {
+    var obj = {
+          ntpagetag : {
+    "lpos":"csc_header_secondary_panel", 
+    "lid" :$.trim(jQuery(this).attr('parent-category-name')),
+	"linktext" : $.trim(jQuery(this).text())
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+}
+catch(err) {}
+
+//clicks on the third level header navigation
+//clicks under tech and support
+try {
+  jQuery(document).on("mousedown","div[class='fw-c-header__masthead'] div[class='fw-c-header__nav'] div[class='fw-c-header__dropdown-content'] div[class*='tier3-container'] div[class*='tier3-col']  div[class='tier-3-link'] a", 
+    function() {
+	var lid1 = $.trim(jQuery(this).parent('div').parent('div').parent('div').prev('div').children('ul').children('li').children('a[class*="active"]').attr('parent-category-name'));
+   	var lid2 = $.trim(jQuery(this).parent('div').parent('div').parent('div').prev('div').children('ul').children('li').children('a[class*="active"]').text());
+	var lid3 = lid1 + "--" + lid2;
+    var obj = {
+          ntpagetag : {
+    "lpos":"csc_header_tertiary_panel", 
+    "lid" :lid3,
+	"linktext" : $.trim(jQuery(this).text()),
+	"grpcat1" : "type1"
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+}
+catch(err) {}
+
+//clicks under all other areas
+
+try {
+  jQuery(document).on("mousedown","div[class='fw-c-header__masthead'] div[class='fw-c-header__nav'] div[class='fw-c-header__dropdown-content'] div[class*='tier3-container'] div[class*='tier3-col'] ul li a", 
+    function() {
+	var lid1 = $.trim(jQuery(this).parent('li').parent('ul').parent('div').parent('div').prev('div').children('ul').children('li').children('a[class*="active"]').attr('parent-category-name'));
+   	var lid2 = $.trim(jQuery(this).parent('li').parent('ul').parent('div').parent('div').prev('div').children('ul').children('li').children('a[class*="active"]').text());
+	var lid3 = lid1 + "--" + lid2;
+    var obj = {
+          ntpagetag : {
+    "lpos":"csc_header_tertiary_panel", 
+    "lid" :lid3,
+	"linktext" : $.trim(jQuery(this).text()),
+	"grpcat1" : "type2"
+          }
+      };
+      trackEvent.event("link", obj); 
+    });	
+}
+catch(err) {}
+
+///////header navigation clicks ---end

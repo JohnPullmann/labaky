@@ -1,0 +1,24 @@
+var func1 = function() {
+	if (LITHIUM.CommunityJsonObject.Page.object.page == "ForumTopicPage" || LITHIUM.CommunityJsonObject.Page.object.page == "TkbArticlePage") {
+		$(".lia-message-subject").each(function() {
+			$(this).html($(this).html().replace(/(?!(<a href=".*">))(CSC[a-z]{2}[0-9]{5})(?!(.*)(<\/a>))/g, "<a href='//quickview.cloudapps.cisco.com/quickview/bug/$&' target='_blank'>$&</a>"));
+		});
+		$(".lia-message-body-content").each(function() {
+			//fix for MIG 468
+			if (!($(this).find('.lia-message-image-wrapper,.lia-vid-container').length)) {
+				$(this).html($(this).html().replace(/(?!(<a href=".*">))(CSC[a-z]{2}[0-9]{5})(?!(.*)(<\/a>))/g, "<a href='//quickview.cloudapps.cisco.com/quickview/bug/$&' target='_blank'>$&</a>"));
+			};
+
+		});
+	}
+};
+if ('undefined' != typeof $) func1();
+else {
+	var iid1 = window.setInterval(function() {
+			if ('undefined' != typeof $) {
+					window.clearInterval(iid1);
+					iid1 = null;
+					func1();
+			}
+	}, 50);
+}

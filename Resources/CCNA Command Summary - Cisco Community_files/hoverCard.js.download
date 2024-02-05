@@ -1,0 +1,155 @@
+/*
+Hover cards functionality for Lithium Communities
+*/
+var func1 = function() {
+
+	common = {
+	
+		removeProfileCard: function() {
+
+			$('.hover-card-container').empty();
+
+		},
+	
+		profileCard: function(){
+
+			//START END-USER CONFIGURATION
+			//------------------------------
+			//selectors for hover card triggers
+
+			var allHoverCardTriggers = '.authors a, .messageauthorusername a, a.lia-user-name-link, .js-latest-post-by-from a, .user-online-list li a, a.UserAvatar, .ViewProfilePage img.lia-user-avatar-profile, .customUsersOnline a, #authors a';
+			var host=window.location.host;
+			var ssoURL=LITHIUM.CommunityJsonObject.Page.authUrls.loginUrl;
+			var isAnonymous = LITHIUM.CommunityJsonObject.User.isAnonymous;
+
+			if(/iPhone|iPad|iPod|Android|webOS|BlackBerry|Opera Mini|IEMobile/i.test(navigator.userAgent))
+				return false;
+
+
+
+
+			//unfortunately all environment paths to endpoints are different
+			if(host=='supportforums-dev2.cisco.com'){
+				var userApiUrl = 'https://supportforums-dev2.cisco.com/ciscosupportdev2/plugins/custom/cisco/ciscosupportdev2/profilehovercard?user_id=';
+			} else if(host=='supportforums-dev1.cisco.com'){
+				var userApiUrl = 'https://supportforums-dev1.cisco.com/ciscosupportdev1/plugins/custom/cisco/ciscosupportdev1/profilehovercard?user_id=';
+			}else if(host=='community-stage.cisco.com'){
+				var userApiUrl = 'https://community-stage.cisco.com/plugins/custom/cisco/ciscodev/profilehovercard?user_id=';
+			}else if(host=='jbzfw78893.stage.lithium.com'){
+				var userApiUrl = 'https://jbzfw78893.stage.lithium.com/plugins/custom/cisco/ciscodevhermes/profilehovercard?user_id=';
+			}else {
+				var userApiUrl = '/plugins/custom/cisco/ciscosupport2022/profilehovercard?user_id=';
+			}
+
+			//------------------------------
+			//STOP END-USER CONFIGURATION
+
+
+			if($('.hover-card-container').length<1){
+				$('body').append('<div class="hover-card-container"></div>');
+			}
+			var cardWrapper = $('.hover-card-container');
+			var error = false;
+			var thisUserID = '';
+			var cardTimer;
+
+			$(document).on({
+				mouseenter: function() {
+					var thisEl = $(this);
+					cardTimer = setTimeout(function(){
+						var docWidth = $(document).width();
+						var rightSide = false;
+						if($(thisEl).parents('.lia-quilt-row.lia-quilt-row-main-header').length){
+							return false;
+						}
+						var userLink = thisEl.attr('href');
+						if($('.ViewProfilePage').length && $('img.lia-user-avatar-profile',thisEl).length  ){
+							var userLink = document.location.href;
+						} else if(thisEl.attr('href')=='#'){
+							return false;
+						}
+						var thisLen = (userLink).split('/');
+						thisUserID = (thisLen)[thisLen.length-1];
+						var thisCard = $('.profileCard[data-user='+thisUserID+']',cardWrapper);
+
+
+						var thisElLeftOffset = Math.round(thisEl.offset().left+(thisEl.width()));
+						var thisElTopOffset = Math.round(thisEl.offset().top+(thisEl.height()/2)-94);
+
+						if((thisElLeftOffset+300)>=docWidth){
+							//hover card is too far to the right of the screen
+							var thisElLeftOffset = Math.round(thisEl.offset().left-300);
+							rightSide = true;
+						}
+
+
+						if(thisCard.length && $('.profileCard[data-user='+thisUserID+'] .preloader',cardWrapper).length<1){
+							$('.profileCard',cardWrapper).hide();
+							rightSide?thisCard.addClass('rightArrow'):thisCard.removeClass('rightArrow');
+							thisCard.delay(500).css({'top':thisElTopOffset,'left':thisElLeftOffset}).stop().show();
+						} else {
+							var ajaxReturn = '';
+
+							//just in case
+							thisCard.remove();
+
+
+							//hover card wrapper markup
+							var rightArrowClass = rightSide?'rightArrow':'';
+							var profileCardHtml = '<div class="profileCard '+rightArrowClass+'" style="position:absolute;display:block;top:'+thisElTopOffset+'px;left:'+thisElLeftOffset+'px;" data-user="'+thisUserID+'"><div class="inner"><div class="preloader" style="margin:80px auto;display:block;"></div></div></div>';
+							$.when(
+								//get the background
+								$.ajax({
+									type: 'GET',
+									url: userApiUrl+thisUserID,
+									dataType: 'html',
+									success: function(data) {
+										$(cardWrapper).empty();
+										ajaxReturn = data;
+									}
+								})
+							)
+							.done(function(){
+								cardWrapper.html(profileCardHtml);
+								$('.profileCard[data-user='+thisUserID+']',cardWrapper).eq(0).empty().html(ajaxReturn);
+								if(isAnonymous){
+									$('#sendMessage').attr("href",LITHIUM.CommunityJsonObject.Page.authUrls.loginUrl.replace(/&TARGET=.*/,"&TARGET=https://"+host+"/t5/notes/composepage/note-to-user-id/69"));
+								}
+								if($('.profileCard[data-user='+thisUserID+'] .preloader',cardWrapper).length){
+									$('.profileCard[data-user='+thisUserID+'] .preloader',cardWrapper).parents('div.profileCard').remove();
+								}
+							})
+							.fail(function(){
+								//uh oh - bail out!
+								$('.profileCard',cardWrapper).hide();
+							});
+						}
+					},400);
+				},
+				mouseleave: function() {
+					clearTimeout(cardTimer);
+					if($('.profileCard[data-user='+thisUserID+']',cardWrapper).length){
+						$('.profileCard[data-user='+thisUserID+']').delay(500).fadeOut('fast');
+					}
+				}
+			},allHoverCardTriggers);
+
+		}
+	}
+	window.common = common;
+	$(document).ready(function() {
+		common.profileCard();
+		$(document).on('click', ':not(.hover-card-container)', common.removeProfileCard);
+	});
+
+};
+if ('undefined' != typeof $) func1();
+else {
+	var iid1 = window.setInterval(function() {
+			if ('undefined' != typeof $) {
+					window.clearInterval(iid1);
+					iid1 = null;
+					func1();
+			}
+	}, 50);
+}
