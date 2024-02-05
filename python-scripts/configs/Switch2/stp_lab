@@ -1,0 +1,7 @@
+hostname Switch2-stp-lab
+!
+spanning-tree mode rapid-pvst
+!
+interface fa 0/1
+!
+spanning-tree vlan 1 cost 2

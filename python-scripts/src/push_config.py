@@ -50,14 +50,14 @@ def push_config(logger, Devices):
 					for each_line in config_file.readlines():
 						config_commands.append(each_line)
 				
-				net_connect.send_config_set(config_commands, delay_factor=2)
+				#net_connect.send_config_set(config_commands, delay_factor=2)
 				#net_connect.set_base_prompt()
-				logger.info(f"\tConfiguration pushed to {device}\n")
-
-				#for command in config_commands:
-				#	net_connect.send_config_set([command], delay_factor=2)
-				#	net_connect.set_base_prompt()
 				#logger.info(f"\tConfiguration pushed to {device}\n")
+
+				for command in config_commands:
+					net_connect.send_config_set([command], delay_factor=2)
+					net_connect.set_base_prompt()
+				logger.info(f"\tConfiguration pushed to {device}\n")
 
 		except (TimeoutError, NetmikoTimeoutException) as error:
 			logger.error(f"\tCould not connect to {device}, Connection timed out\n")

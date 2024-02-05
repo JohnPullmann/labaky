@@ -1,0 +1,3 @@
+hostname Switch1-stp-lab
+!
+spanning-tree mode rapid-pvst

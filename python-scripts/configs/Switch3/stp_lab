@@ -1,0 +1,5 @@
+hostname Switch3-stp-lab
+!
+spanning-tree mode rapid-pvst
+!
+spanning-tree vlan 1 root primary
