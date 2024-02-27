@@ -5,6 +5,8 @@ import time
 
 def push_config(logger, Devices):
 	"""Push configuration to devices."""
+	script_dir = os.path.dirname(os.path.abspath(__file__))
+
 	for device in Devices:
 		logger.info(f"Configuring {device} ...")
 		try:
@@ -18,9 +20,10 @@ def push_config(logger, Devices):
 				while True:
 					logger.info(f"\tChoose one of available configuration files for {device}:")   
 					config_files = {}
-					for i, config_file in enumerate(os.listdir("labaky/python-scripts/configs/"+device+"/")):
+					config_dir = os.path.join(script_dir, "labaky/python-scripts/configs", device)
+					for i, config_file in enumerate(os.listdir(config_dir)):
 						logger.info(f"\t{i+1}. - {device+'/'+config_file }")
-						config_files[config_file] = 'labaky/python-scripts/configs/'+device+'/'+config_file
+						config_files[config_file] = os.path.join(config_dir, config_file)
 					logger.info("\tTo choose configuration, type it's number or name. To stop choosing, type 'exit'.")
 					logger.info("\tEnter configuration: ")
 					user_input = input("\t").strip()

@@ -8,6 +8,8 @@ def backup_config(logger, Devices):
         os.makedirs('backup-config')
 
     outputs = {}
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    backup_dir = os.path.join(script_dir, 'labaky/python-scripts/backup-config', device)
 
     for device in Devices:
         logger.info(f"Backing up {device} ...")
@@ -29,9 +31,9 @@ def backup_config(logger, Devices):
                 dt_string = now.strftime("%d-%m-%Y_%H-%M")
                 fileName = hostname + "_" + dt_string
                 # Creates the text file in the backup-config folder with the special name, and writes to it.
-                if not os.path.exists('labaky/python-scripts/backup-config/'+device+"/"):
-                    os.makedirs('labaky/python-scripts/backup-config/'+device+"/")
-                file_path = "labaky/python-scripts/backup-config/"+device+"/" + fileName + ".txt"
+                if not os.path.exists(backup_dir):
+                    os.makedirs(backup_dir)
+                file_path = os.path.join(backup_dir, fileName + ".txt")
                 with open(file_path, "w+") as backupFile:
                     backupFile.write(output)
                 logger.info("\tOutputted to " + file_path + "\n")
